@@ -17,11 +17,18 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @EnableJpaRepositories
 @Import({DataConfig.class})
 public class Config extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+        registry.addResourceHandler("/image/**").addResourceLocations("/image/");
+    }
  
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-        resolver.setPrefix("/static/");
+        resolver.setPrefix("/WEB-INF/jsp/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(InternalResourceView.class);
         return resolver;

@@ -1,0 +1,172 @@
+body{
+    background-color: #111145;
+}
+#header{
+    position: absolute;
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 70px;
+    text-align: center;
+    background-color: #0604a5;
+    color: white;
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+
+}
+li{
+    list-style-type: none;
+    border: 1px solid black;
+    height: 35px;
+    border-spacing: 0;
+    background-color: #16a6fe;
+    color: #0604a5;
+    padding-left: 10px;
+}
+
+#menu{
+     position:absolute;
+     border-right: 1px solid black;
+     top: 80px;
+     width:200px;
+     height: 100%;
+     background-color: #0604a5;
+}
+#submenu_1{
+    position:fixed;
+    top: 80px;
+    left: 210px;
+    width:200px;
+    z-index: 1;
+
+}
+#submenu_2{
+    position:fixed;
+    top: 117px;
+    left: 210px;
+    width:200px;
+    z-index: 1;
+}
+#submenu_3{
+    position:fixed;
+    top: 154px;
+    left: 210px;
+    width:200px;
+    z-index: 1;
+}
+#submenu_4{
+    position:fixed;
+    top: 191px;
+    left: 210px;
+    width:200px;
+    z-index: 1;
+}
+#submenu_5{
+    position:fixed;
+    top: 228px;
+    left: 210px;
+    width:200px;
+    z-index: 1;
+}
+#submenu_6{
+    position:fixed;
+    top: 265px;
+    left: 210px;
+    width:200px;
+    z-index: 1;
+}
+
+table{
+    position: absolute;
+    top: 100px;
+    left: 250px;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+caption{
+    color: white;
+    font-size: 22px;
+    padding-bottom: 5px;
+}
+
+td, th{
+    border: 2px solid black;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+th{
+    background-color: #16a6fe;
+    color: black;
+    height: 44px;
+    width: 30px;
+
+}
+td{
+    color: white;
+}
+
+#findEmpButton{
+    background-color: aqua;
+    border: 2px solid black;
+    font-size: 18px;
+    position: relative;
+    left: 110px;
+}
+
+.namePage{
+    position: absolute;
+    top: 95px;
+    left: 300px;
+    color: white;
+}
+
+#divNewEmpText{
+    position: absolute;
+    top: 145px;
+    left: 300px;
+    color: white;
+    font-size: 16.5px;
+}
+
+#divNewEmpData{
+    position: absolute;
+    top: 145px;
+    color: white;
+    left: 480px;
+}
+
+#newEmpButton{
+    background-color: aqua;
+    border: 2px solid black;
+    font-size: 18px;
+    position: absolute;
+    top: 320px;
+    left: -75px;
+}
+
+#resultFindTable{
+    top: 400px;
+}
+
+.updateButton{
+    background-color: #111145;
+    width: 80px;
+    height: 30px;
+
+}
+.deleteButton{
+    background-color: #111145;
+    width: 80px;
+    height: 30px;
+}
+
+.form{
+    position: absolute;
+    top: 100px;
+    left: 300px;
+    color: white;
+}

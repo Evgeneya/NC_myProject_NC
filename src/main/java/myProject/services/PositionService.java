@@ -9,5 +9,9 @@ import java.util.List;
  */
 public interface PositionService {
     List<PositionEntity> findAll();
+    PositionEntity save(PositionEntity position);
+    void delete(Long id);
     List<PositionEntity> findByName(String name);
+    List<PositionEntity> findLessMinSalary(int minSal);
+    List<PositionEntity> findMoreMaxSalary(int maxSal);
 }

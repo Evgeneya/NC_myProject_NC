@@ -34,4 +34,38 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.delete(id);
         return;
     }
+
+    public List<EmployeeEntity> findByName(String name){
+        return employeeRepository.findByName(name);
+    }
+
+    public List<EmployeeEntity> findByPosition(long position_id){
+        return employeeRepository.findByPositionId(position_id);
+    }
+
+    public List<EmployeeEntity> findByNameAndPositionId(String name, long position_id){
+        return employeeRepository.findByNameAndPositionId(name, position_id);
+    }
+
+    public List<EmployeeEntity> findByExperienceBetween(int exp1, int exp2){
+        return employeeRepository.findByExperienceBetween(exp1, exp2);
+    }
+
+    public List<EmployeeEntity> findBySalaryBetween(int sal1, int sal2){
+        return employeeRepository.findBySalaryBetween(sal1, sal2);
+    }
+
+    public List<EmployeeEntity> findByExperienceBetweenAndSalaryBetween(int exp1, int exp2, int sal1, int sal2){
+        return employeeRepository.findByExperienceBetweenAndSalaryBetween(exp1, exp2, sal1, sal2);
+    }
+    public List<EmployeeEntity> findByNameAndExperienceBetweenAndSalaryBetween(String name, int exp1, int exp2, int sal1, int sal2){
+        return employeeRepository.findByNameAndExperienceBetweenAndSalaryBetween(name, exp1, exp2, sal1, sal2);
+    }
+    public List<EmployeeEntity> findByPositionIdAndExperienceBetweenAndSalaryBetween(long position_id, int exp1, int exp2, int sal1, int sal2){
+        return employeeRepository.findByPositionIdAndExperienceBetweenAndSalaryBetween(position_id, exp1, exp2, sal1, sal2);
+    }
+
+    public List<EmployeeEntity> findByNameAndPositionIdAndExperienceBetweenAndSalaryBetween(String name, long position_id, int exp1, int exp2, int sal1, int sal2){
+        return employeeRepository.findByNameAndPositionIdAndExperienceBetweenAndSalaryBetween(name, position_id, exp1, exp2, sal1, sal2);
+    }
 }

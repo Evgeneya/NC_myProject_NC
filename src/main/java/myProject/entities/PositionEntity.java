@@ -20,10 +20,10 @@ public class PositionEntity {
     private String name;
 
     @Column(name="min_salary")
-    private int min_salary;
+    private int minSalary;
 
     @Column(name="max_salary")
-    private int max_salary;
+    private int maxSalary;
 
     @OneToMany(mappedBy = "position")
     private Collection<EmployeeEntity> employees;
@@ -52,19 +52,19 @@ public class PositionEntity {
     }
 
     public int getMin_salary() {
-        return min_salary;
+        return minSalary;
     }
 
     public void setMin_salary(int min_salary) {
-        this.min_salary = min_salary;
+        this.minSalary = min_salary;
     }
 
     public int getMax_salary() {
-        return max_salary;
+        return maxSalary;
     }
 
     public void setMax_salary(int max_salary) {
-        this.max_salary = max_salary;
+        this.maxSalary = max_salary;
     }
 
     public Collection<EmployeeEntity> getEmployees() {
@@ -77,6 +77,6 @@ public class PositionEntity {
 
     @Override
     public String toString(){
-        return "id = " + id + ", name = " + name + ", minSalary = " + min_salary + ", maxSalary = " + max_salary + ";";
+        return "id = " + id + ", name = " + name + ", minSalary = " + minSalary + ", maxSalary = " + maxSalary + ";";
     }
 }

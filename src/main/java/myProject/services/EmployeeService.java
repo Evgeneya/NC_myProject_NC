@@ -11,4 +11,13 @@ public interface EmployeeService {
     List<EmployeeEntity> findAll();
     EmployeeEntity save(EmployeeEntity employee);
     void delete(Long id);
+    List<EmployeeEntity> findByName(String name);
+    List<EmployeeEntity> findByPosition(long position_id);
+    List<EmployeeEntity> findByNameAndPositionId(String name, long position_id);
+    List<EmployeeEntity> findByExperienceBetween(int exp1, int exp2);
+    List<EmployeeEntity> findBySalaryBetween(int sal1, int sal2);
+    List<EmployeeEntity> findByExperienceBetweenAndSalaryBetween(int exp1, int exp2, int sal1, int sal2);
+    List<EmployeeEntity> findByNameAndExperienceBetweenAndSalaryBetween(String name, int exp1, int exp2, int sal1, int sal2);
+    List<EmployeeEntity> findByPositionIdAndExperienceBetweenAndSalaryBetween(long position_id, int exp1, int exp2, int sal1, int sal2);
+    List<EmployeeEntity> findByNameAndPositionIdAndExperienceBetweenAndSalaryBetween(String name, long position_id, int exp1, int exp2, int sal1, int sal2);
 }

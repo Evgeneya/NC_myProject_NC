@@ -19,17 +19,31 @@ import java.util.List;
 @Transactional
 public class PositionServiceImpl implements PositionService {
 
-        @Autowired
-        private PositionRepository positionRepository;
+    @Autowired
+    private PositionRepository positionRepository;
 
-        public List<PositionEntity> findAll() {
-            return (ArrayList<PositionEntity>)positionRepository.findAll();
-            //return Lists.newArrayList(positionRepository.findAll());
-        }
+    public List<PositionEntity> findAll() {
+        return positionRepository.findAll();
+    }
 
-        public List<PositionEntity> findByName(String name) {
-            return positionRepository.findByName(name);
-        }
+    public PositionEntity save(PositionEntity position){
+        return positionRepository.save(position);
+    }
+    public void delete(Long id){
+        positionRepository.delete(id);
+        return;
+    }
+    public List<PositionEntity> findByName(String name) {
+        return positionRepository.findByName(name);
+    }
+
+    public List<PositionEntity> findLessMinSalary(int minSal){
+        return positionRepository.findByMinSalaryBetween(0, minSal);  //буду искать должности с зп меньше указанной
+    }
+    public List<PositionEntity> findMoreMaxSalary(int maxSal){
+        return positionRepository.findByMaxSalaryBetween(maxSal, 500000); //буду искать должности с зп больше указанной
 
     }
+
+}
 

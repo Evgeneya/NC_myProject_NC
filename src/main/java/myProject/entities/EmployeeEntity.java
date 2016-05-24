@@ -36,7 +36,7 @@ public class EmployeeEntity {
     private int experience;
 
     @Column(name="salary")
-    private long salary;
+    private int salary;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "position_id")
@@ -106,11 +106,11 @@ public class EmployeeEntity {
         this.experience = experience;
     }
 
-    public long getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(long salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 

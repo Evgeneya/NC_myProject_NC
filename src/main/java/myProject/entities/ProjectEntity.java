@@ -22,11 +22,11 @@ public class ProjectEntity {
 
     @Temporal(TemporalType.DATE)
     @Column(name="beg_date")
-    private Date beg_date;
+    private Date begDate;
 
     @Temporal(TemporalType.DATE)
     @Column(name="end_date")
-    private Date end_date;
+    private Date endDate;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -60,19 +60,19 @@ public class ProjectEntity {
 
 
     public Date getBeg_date() {
-        return beg_date;
+        return begDate;
     }
 
     public void setBeg_date(Date beg_date) {
-        this.beg_date = beg_date;
+        this.begDate = beg_date;
     }
 
     public Date getEnd_date() {
-        return end_date;
+        return endDate;
     }
 
     public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
+        this.endDate = end_date;
     }
 
     public CustomerEntity getCustomer() {

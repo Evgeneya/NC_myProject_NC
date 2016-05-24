@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,4 +38,17 @@ public class ProjectServiceImpl implements ProjectService {
         projectRepository.delete(id);
         return;
     }
+
+    public List<ProjectEntity> findByName(String name){
+        return findByName(name);
+    }
+
+    public List<ProjectEntity> findByEndDateBetween(Date date1, Date date2){
+        return findByEndDateBetween(date1, date2);
+    }
+
+    public List<ProjectEntity> findByCustomer(long customer_id){
+        return findByCustomer(customer_id);
+    }
+
 }
