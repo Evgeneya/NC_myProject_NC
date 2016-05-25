@@ -9,6 +9,7 @@ import java.util.List;
  * Created by 1 on 27.04.2016.
  */
 public interface EmployeeRepository extends CrudRepository<EmployeeEntity, Long> {
+    List<EmployeeEntity> findById(long id);
     List<EmployeeEntity> findByName(String name);
     List<EmployeeEntity> findByPositionId(long position_id);
     List<EmployeeEntity> findByNameAndPositionId(String name, long position_id);

@@ -30,9 +30,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
-    public void delete(Long id){
+    public void delete(long id){
         employeeRepository.delete(id);
         return;
+    }
+
+    public List<EmployeeEntity> findById(long id){
+        return employeeRepository.findById(id);
     }
 
     public List<EmployeeEntity> findByName(String name){

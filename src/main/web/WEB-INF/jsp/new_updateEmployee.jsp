@@ -1,7 +1,6 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="myProject.entities.PositionEntity" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="myProject.entities.EmployeeEntity" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: 1
@@ -16,7 +15,6 @@
 <html>
 <head>
   <title>My Project</title>
-
 </head>
 <body>
 <div id="header">
@@ -36,7 +34,7 @@
 <div id="submenu_1" style="display:none;" onmouseout="hideMenu('1')">
   <ul>
     <li><a href="/listEmployee">Список cотрудников</a></li>
-    <li><a href="/newEmployee">Новый сотрудник</a></li>
+    <li><a href="/new_updateEmployee?new=true&res=false">Новый сотрудник</a></li>
     <li><a href="/findEmployee?res=false">Поиск сотрудников</a></li>
   </ul>
 </div>
@@ -75,30 +73,57 @@
     <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%String res = (String) request.getAttribute("res");%>
-  <form action="/findEmployee">
-    <h2>Поиск сотрудников</h2>
-    <h3>Критерии поиска:</h3>
-    <input name="res" value="true" type="hidden">
-    <p>ФИО: <input type="text" size="30px" name="name" value="<%=(request.getAttribute("name")==null)?"":request.getAttribute("name")%>"></p>
-    <p>Должность: <select name="position">
-                  <option></option>
-                  <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
-                    for (int i = 0; i < listPos.size(); i++) {
-                      if ((request.getAttribute("position") != null) && request.getAttribute("position").equals(listPos.get(i).getName())){%>
-                        <option selected><%=listPos.get(i).getName()%></option>
-                      <%}else%>
-                        <option><%=listPos.get(i).getName()%></option>
-                    <%}%>
-                  </select>
+<%if (request.getAttribute("new").equals("true")){
+String res = (String) request.getAttribute("res");%>
+<form action="/new_updateEmployee">
+  <h2>Новый сотрудник</h2>
+  <input name="new" value="true" type="hidden">
+  <input name="res" value="true" type="hidden">
+  <div class="divNewEmpText">
+    <p>ФИО:</p>
+    <p>Должность:</p>
+    <p>Опыт работы:</p>
+    <p>Заработная плата:</p>
+    <p>Email:</p>
+    <p>Телефон:</p>
+    <p>Возраст:</p>
+    <p>Семейное положение:</p>
+  </div>
+  <div class="divNewEmpData">
+    <p><input type="text" size="30px" name="name"></p>
+    <p><select name="position">
+      <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
+        for (int i = 0; i < listPos.size(); i++) {%>
+      <option><%=listPos.get(i).getName()%></option>
+      <%}%>
+    </select>
     </p>
-    <p>Опыт работы:   от <input type="text" size="3px" name="exp1" value="<%=(request.getAttribute("exp1")==null)?"":request.getAttribute("exp1")%>">  до <input type="text" size="3px" name="exp2" value="<%=(request.getAttribute("exp2")==null)?"":request.getAttribute("exp2")%>"></p>
-    <p>Заработная плата:   от <input type="text" size="7px" name="sal1" value="<%=(request.getAttribute("sal1")==null)?"":request.getAttribute("sal1")%>">  до <input type="text" size="7px" name="sal2" value="<%=(request.getAttribute("sal2")==null)?"":request.getAttribute("sal2")%>"></p>
-    <button id="findEmpButton" type="submit"><b>Найти</b></button>
-  </form>
+    <p><input type="text" size="3px" name="exp"></p>
+    <p><input type="text" size="7px" name="sal"></p>
+    <p><input type="text" size="10px" name="email1">@<select name="email2">
+      <option>mail.ru</option>
+      <option>gmail.com</option>
+      <option>yandex.ru</option>
+    </select>
+    </p>
+    <p><input type="text" size="7px" name="phone"></p>
+    <p><select name="age">
+      <%for (int i=18; i <=65; i++){%>
+      <option><%=i%></option>
+      <%}%>
+    </select>
+    </p>
+    <p><select name="status">
+      <option>Single</option>
+      <option>Married</option>
+    </select>
+    </p>
+  </div>
+  <button class="newEmpButton" type="submit"><b>Добавить</b></button>
+</form>
 <%if (res.equals("true")){%>
-<table id="resultFindTable">
-  <caption>Результаты поиска:</caption>
+<table id="resultNewTable">
+  <caption>Новый сотрудник успешно добавлен</caption>
   <tr>
     <th>id</th>
     <th>ФИО</th>
@@ -125,7 +150,7 @@
     <td><%=listEmp.get(i).getExperience()%></td>
     <td><%=listEmp.get(i).getSalary()%></td>
     <td>
-      <a href="/updateEmployee?id=<%=listEmp.get(i).getId()%>">
+      <a href="/new_updateEmployee?new=false&id=<%=listEmp.get(i).getId()%>">
         <button id="updateButton<%=listEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmp.get(i).getId()%>')" >
           <img src="../../image/update.png" width="25px" height="25px">
         </button>
@@ -139,6 +164,86 @@
   </tr>
   <%}%>
 </table>
+<%}%>
+<%}
+else {%>
+<%ArrayList<EmployeeEntity> listEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listEmp");%>
+<form action="/resultEmployee">
+  <input name="del" value="false" type="hidden">
+  <input name="id" value="<%=listEmp.get(0).getId()%>" type="hidden">
+  <h2>Изменить сведения о сотруднике</h2>
+  <div class="divNewEmpText">
+    <p>ФИО:</p>
+    <p>Должность:</p>
+    <p>Опыт работы:</p>
+    <p>Заработная плата:</p>
+    <p>Email:</p>
+    <p>Телефон:</p>
+    <p>Возраст:</p>
+    <p>Семейное положение:</p>
+  </div>
+  <div class="divNewEmpData">
+    <p><input type="text" size="30px" name="name" value="<%=listEmp.get(0).getName()%>"></p>
+    <p><select name="position">
+      <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
+        for (int i = 0; i < listPos.size(); i++) {
+          if (listEmp.get(0).getPosition().getId() == listPos.get(i).getId()){%>
+      <option selected><%=listPos.get(i).getName()%></option>
+      <%}
+      else %>
+      <option><%=listPos.get(i).getName()%></option>
+      <%}%>
+    </select>
+    </p>
+    <p><input type="text" size="3px" name="exp" value="<%=listEmp.get(0).getExperience()%>"></p>
+    <p><input type="text" size="7px" name="sal" value="<%=listEmp.get(0).getSalary()%>"></p>
+    <%String email[] = listEmp.get(0).getEmail().split("@");%>
+    <p><input type="text" size="10px" name="email1" value="<%=email[0]%>">@<select name="email2">
+      <%if (email[1].equals("mail.ru")){%>
+      <option selected>mail.ru</option>
+      <%}
+      else{%>
+      <option>mail.ru</option>
+      <%}if (email[1].equals("gmail.com")){%>
+      <option selected>gmail.com</option>
+      <%}
+      else{%>
+      <option>gmail.com</option>
+      <%}if (email[1].equals("yandex.ru")){%>
+      <option selected>yandex.ru</option>
+      <%}
+      else{%>
+      <option>yandex.ru</option>
+      <%}%>
+    </select>
+    </p>
+    <p><input type="text" size="7px" name="phone" value="<%=listEmp.get(0).getPhone()%>"></p>
+    <p><select name="age">
+      <%for (int i=18; i <=65; i++){%>
+      <%if (listEmp.get(0).getAge() == i){%>
+      <option selected><%=i%></option>
+      <%}
+      else%>
+      <option><%=i%></option>
+      <%}%>
+    </select>
+    </p>
+    <p><select name="status">
+      <%if (listEmp.get(0).getStatus().equals("Single")){%>
+      <option selected>Single</option>
+      <%}
+      else%>
+      <option>Single</option>
+      <%if (listEmp.get(0).getStatus().equals("Married")){%>
+      <option selected>Married</option>
+      <%}
+      else%>
+      <option>Married</option>
+    </select>
+    </p>
+  </div>
+  <button class="newEmpButton" type="submit"><b>Изменить</b></button>
+</form>
 <%}%>
 </body>
 </html>

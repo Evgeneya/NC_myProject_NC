@@ -9,8 +9,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<link rel="stylesheet" type="text/css" href="../../css/base.css">
-<script src="../../js/js.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/base.css">
+<link rel="stylesheet" type="text/css" href="../css/employee.css">
+<script src="../js/js.js"></script>
 <html>
 <head>
   <title>My Project</title>
@@ -29,6 +30,7 @@
     <li id="menu_6" onmouseover="showMenu('6')" onmouseout="hideMenu('6')">Ресурсные планы</li>
   </ul>
 </div>
+</div>
 <div id="submenu_1" style="display:none;" onmouseout="hideMenu('1')">
   <ul>
     <li><a href="/listEmployee">Список cотрудников</a></li>
@@ -38,40 +40,41 @@
 </div>
 <div id="submenu_2" style="display:none;" onmouseout="hideMenu('2')">
   <ul>
-    <li>Список должностей</li>
-    <li>Новая должность</li>
-    <li>Поиск по должностям</li>
+    <li><a href="/listPosition">Список должностей</a></li>
+    <li><a href="/newPosition">Новая должность</a></li>
+    <li><a href="/findPosition">Поиск по должностям</a></li>
   </ul>
 </div>
 <div id="submenu_3" style="display:none;" onmouseout="hideMenu('3')">
   <ul>
-    <li>Список проектов</li>
-    <li>Новый проект</li>
-    <li>Поиск по проектам</li>
+    <li><a href="/listProject">Список проектов</a></li>
+    <li><a href="/newProject">Новый проект</a></li>
+    <li><a href="/findProject">Поиск по проектам</a></li>
   </ul>
 </div>
 <div id="submenu_4" style="display:none;" onmouseout="hideMenu('4')">
   <ul>
-    <li>Список</li>
-    <li>Новый </li>
-    <li>Поиск </li>
+    <li><a href="/listEmployment">Полный список</a></li>
+    <li><a href="/newEmployment">Назначить сотрудника на проект</a></li>
+    <li><a href="/findEmployment">Поиск по занятости</a></li>
   </ul>
 </div>
 <div id="submenu_5" style="display:none;" onmouseout="hideMenu('5')">
   <ul>
-    <li>Список заказчиков</li>
-    <li>Новый заказчик</li>
-    <li>Поиск заказчиков</li>
+    <li><a href="/listCustomer">Список заказчиков</a></li>
+    <li><a href="/newCustomer">Новый заказчик</a></li>
+    <li><a href="/findCustomer">Поиск заказчиков</a></li>
   </ul>
 </div>
 <div id="submenu_6" style="display:none;" onmouseout="hideMenu('6')">
   <ul>
-    <li>Список ресурсных планов</li>
-    <li>Новый ресурсный план</li>
-    <li>Поиск по ресурсным планам</li>
+    <li><a href="/listResources_plan">Список ресурсных планов</a></li>
+    <li><a href="/newResources_plan">Новый ресурсный план</a></li>
+    <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-    <h2 class="namePage">Новый сотрудник</h2>
+  <form action="/resultNewEmployee">
+    <h2>Новый сотрудник</h2>
     <div id="divNewEmpText">
       <p>ФИО:</p>
       <p>Должность:</p>
@@ -83,7 +86,6 @@
       <p>Семейное положение:</p>
     </div>
     <div id="divNewEmpData">
-      <form action="/resultNewEmployee">
       <p><input type="text" size="30px" name="name"></p>
       <p><select name="position">
         <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
@@ -108,12 +110,12 @@
       </select>
       </p>
       <p><select name="status">
-        <option>Холост/Не замужем</option>
-        <option>Женат/Замужем</option>
+        <option>Single</option>
+        <option>Married</option>
       </select>
       </p>
-      <button id="newEmpButton" type="submit"><b>Добавить</b></button>
-      </form>
     </div>
+    <button id="newEmpButton" type="submit"><b>Добавить</b></button>
+  </form>
 </body>
 </html>

@@ -10,7 +10,8 @@ import java.util.List;
 public interface EmployeeService {
     List<EmployeeEntity> findAll();
     EmployeeEntity save(EmployeeEntity employee);
-    void delete(Long id);
+    void delete(long id);
+    List<EmployeeEntity> findById(long id);
     List<EmployeeEntity> findByName(String name);
     List<EmployeeEntity> findByPosition(long position_id);
     List<EmployeeEntity> findByNameAndPositionId(String name, long position_id);

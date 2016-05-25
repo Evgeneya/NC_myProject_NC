@@ -29,3 +29,17 @@ function unselectButton(id){
     var button = document.getElementById(id);
     button.style.borderColor = 'white';
 }
+function deleteEmp(id){
+    var x=confirm("Все записи в таблице занятости с этим сотрудником будут также удалены.\n Вы действительно хотите удалить сотрудника?");
+    if (x==true){
+        document.location.href = "/resultEmployee?del=true&id=" + id;
+    }
+    else return;
+}
+function deletePos(id){
+    var x=confirm("Вы действительно хотите удалить должность?");
+    if (x==true){
+        document.location.href = "/resultDeletePosition?id=" + id;
+    }
+    else return;
+}

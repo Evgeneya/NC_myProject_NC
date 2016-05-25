@@ -11,7 +11,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" type="text/css" href="../../css/base.css">
-<link rel="stylesheet" type="text/css" href="../../css/employee.css">
+<link rel="stylesheet" type="text/css" href="../../css/position.css">
 <script src="../../js/js.js"></script>
 <html>
 <head>
@@ -37,7 +37,7 @@
   <ul>
     <li><a href="/listEmployee">Список cотрудников</a></li>
     <li><a href="/newEmployee">Новый сотрудник</a></li>
-    <li><a href="/findEmployee?res=false">Поиск сотрудников</a></li>
+    <li><a href="/findEmployee">Поиск сотрудников</a></li>
   </ul>
 </div>
 <div id="submenu_2" style="display:none;" onmouseout="hideMenu('2')">
@@ -75,70 +75,43 @@
     <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%String res = (String) request.getAttribute("res");%>
-  <form action="/findEmployee">
-    <h2>Поиск сотрудников</h2>
-    <h3>Критерии поиска:</h3>
-    <input name="res" value="true" type="hidden">
-    <p>ФИО: <input type="text" size="30px" name="name" value="<%=(request.getAttribute("name")==null)?"":request.getAttribute("name")%>"></p>
-    <p>Должность: <select name="position">
-                  <option></option>
-                  <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
-                    for (int i = 0; i < listPos.size(); i++) {
-                      if ((request.getAttribute("position") != null) && request.getAttribute("position").equals(listPos.get(i).getName())){%>
-                        <option selected><%=listPos.get(i).getName()%></option>
-                      <%}else%>
-                        <option><%=listPos.get(i).getName()%></option>
-                    <%}%>
-                  </select>
-    </p>
-    <p>Опыт работы:   от <input type="text" size="3px" name="exp1" value="<%=(request.getAttribute("exp1")==null)?"":request.getAttribute("exp1")%>">  до <input type="text" size="3px" name="exp2" value="<%=(request.getAttribute("exp2")==null)?"":request.getAttribute("exp2")%>"></p>
-    <p>Заработная плата:   от <input type="text" size="7px" name="sal1" value="<%=(request.getAttribute("sal1")==null)?"":request.getAttribute("sal1")%>">  до <input type="text" size="7px" name="sal2" value="<%=(request.getAttribute("sal2")==null)?"":request.getAttribute("sal2")%>"></p>
-    <button id="findEmpButton" type="submit"><b>Найти</b></button>
+  <form action="/resultFindPosition">
+    <h2>Поиск должности</h2>
+    <h3>Критерий поиска:</h3>
+    <p>Название: <input type="text" size="30px" name="name" value="<%=request.getAttribute("name")%>"></p>
+    <button id="findPosButton" type="submit"><b>Найти</b></button>
   </form>
-<%if (res.equals("true")){%>
 <table id="resultFindTable">
-  <caption>Результаты поиска:</caption>
+  <caption>Результат поиска</caption>
   <tr>
     <th>id</th>
-    <th>ФИО</th>
-    <th>Должность</th>
-    <th>Email</th>
-    <th>Телефон</th>
-    <th>Возраст</th>
-    <th>Семейное положение</th>
-    <th>Опыт работы</th>
-    <th>Заработная плата</th>
+    <th>Название</th>
+    <th>Минимальная з/п</th>
+    <th>Максимальная з/п</th>
     <th class="notResizeCol">Изменение</th>
     <th class="notResizeCol">Удаление</th>
   </tr>
-  <% ArrayList<EmployeeEntity> listEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listEmp");
-    for (int i=0; i < listEmp.size(); i++){%>
+  <% ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
+    for (int i=0; i < listPos.size(); i++){%>
   <tr>
-    <td><%=listEmp.get(i).getId()%></td>
-    <td><%=listEmp.get(i).getName()%></td>
-    <td><%=listEmp.get(i).getPosition().getName()%></td>
-    <td><%=listEmp.get(i).getEmail()%></td>
-    <td><%=listEmp.get(i).getPhone()%></td>
-    <td><%=listEmp.get(i).getAge()%></td>
-    <td><%=listEmp.get(i).getStatus()%></td>
-    <td><%=listEmp.get(i).getExperience()%></td>
-    <td><%=listEmp.get(i).getSalary()%></td>
+    <td><%=listPos.get(i).getId()%></td>
+    <td><%=listPos.get(i).getName()%></td>
+    <td><%=listPos.get(i).getMin_salary()%></td>
+    <td><%=listPos.get(i).getMax_salary()%></td>
     <td>
-      <a href="/updateEmployee?id=<%=listEmp.get(i).getId()%>">
-        <button id="updateButton<%=listEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmp.get(i).getId()%>')" >
+      <a href="/updatePosition?id=<%=listPos.get(i).getId()%>">
+        <button id="updateButton<%=listPos.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listPos.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listPos.get(i).getId()%>')" >
           <img src="../../image/update.png" width="25px" height="25px">
         </button>
       </a>
     </td>
     <td>
-      <button id="deleteButton<%=listEmp.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listEmp.get(i).getId()%>')" onclick="deleteEmp(<%=listEmp.get(i).getId()%>)">
+      <button id="deleteButton<%=listPos.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listPos.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listPos.get(i).getId()%>')" onclick="deletePos(<%=listPos.get(i).getId()%>)">
         <img src="../../image/delete.png" width="25px" height="25px">
       </button>
     </td>
   </tr>
   <%}%>
 </table>
-<%}%>
 </body>
 </html>

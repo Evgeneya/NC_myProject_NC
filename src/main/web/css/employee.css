@@ -1,0 +1,36 @@
+#findEmpButton{
+    position: relative;
+    left: 110px;
+}
+
+
+.divNewEmpText{
+    font-size: 16.5px;
+}
+
+.divNewEmpData{
+    position: absolute;
+    top: 50px;
+    left: 200px;
+}
+
+.newEmpButton{
+    background-color: aqua;
+    border: 2px solid black;
+    font-size: 18px;
+    position: absolute;
+    top: 370px;
+    left: 100px;
+}
+
+#resultFindTable{
+    top: 400px;
+}
+
+#resultNewTable{
+    top: 500px;
+}
+
+table{
+    width: 1070px;
+}

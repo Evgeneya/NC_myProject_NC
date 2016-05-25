@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="myProject.entities.EmployeeEntity" %>
+<%@ page import="myProject.entities.PositionEntity" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: 1
@@ -8,10 +9,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<link rel="stylesheet" type="text/css" href="../../css/base.css">
-<link rel="stylesheet" type="text/css" href="../../css/employee.css">
-<script src="../../js/js.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/base.css">
+<link rel="stylesheet" type="text/css" href="../css/employee.css">
+<script src="../js/js.js"></script>
 <html>
 <head>
   <title>My Project</title>
@@ -73,47 +73,21 @@
     <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-  <table>
-    <caption>Список сотрудников компании</caption>
-    <tr>
-      <th>id</th>
-      <th>ФИО</th>
-      <th>Должность</th>
-      <th>Email</th>
-      <th>Телефон</th>
-      <th>Возраст</th>
-      <th>Семейное положение</th>
-      <th>Опыт работы</th>
-      <th>Заработная плата</th>
-      <th class="notResizeCol">Изменение</th>
-      <th class="notResizeCol">Удаление</th>
-    </tr>
-    <% ArrayList<EmployeeEntity> listEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listEmp");
-      for (int i=0; i < listEmp.size(); i++){%>
-      <tr>
-        <td><%=listEmp.get(i).getId()%></td>
-        <td><%=listEmp.get(i).getName()%></td>
-        <td><%=listEmp.get(i).getPosition().getName()%></td>
-        <td><%=listEmp.get(i).getEmail()%></td>
-        <td><%=listEmp.get(i).getPhone()%></td>
-        <td><%=listEmp.get(i).getAge()%></td>
-        <td><%=listEmp.get(i).getStatus()%></td>
-        <td><%=listEmp.get(i).getExperience()%></td>
-        <td><%=listEmp.get(i).getSalary()%></td>
-        <td>
-          <a href="/new_updateEmployee?new=false&id=<%=listEmp.get(i).getId()%>">
-            <button id="updateButton<%=listEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmp.get(i).getId()%>')" >
-              <img src="../../image/update.png" width="25px" height="25px">
-            </button>
-          </a>
-        </td>
-        <td>
-            <button id="deleteButton<%=listEmp.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listEmp.get(i).getId()%>')" onclick="deleteEmp(<%=listEmp.get(i).getId()%>)">
-              <img src="../../image/delete.png" width="25px" height="25px">
-            </button>
-        </td>
-      </tr>
-    <%}%>
-  </table>
+  <form action="/resultFindEmployee">
+    <h2>Поиск сотрудников</h2>
+    <h3>Критерии поиска:</h3>
+    <p>ФИО: <input type="text" size="30px" name="name"></p>
+    <p>Должность: <select name="position">
+                  <option></option>
+                  <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
+                    for (int i = 0; i < listPos.size(); i++) {%>
+                      <option><%=listPos.get(i).getName()%></option>
+                    <%}%>
+                  </select>
+    </p>
+    <p>Опыт работы:   от <input type="text" size="3px" name="exp1">  до <input type="text" size="3px" name="exp2"></p>
+    <p>Заработная плата:   от <input type="text" size="7px" name="sal1">  до <input type="text" size="7px" name="sal2"></p>
+    <button id="findEmpButton" type="submit"><b>Найти</b></button>
+  </form>
 </body>
 </html>

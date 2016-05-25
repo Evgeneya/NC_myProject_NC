@@ -1,7 +1,11 @@
 package myProject.repository;
 
 import myProject.entities.EmploymentEntity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * Created by 1 on 27.04.2016.
