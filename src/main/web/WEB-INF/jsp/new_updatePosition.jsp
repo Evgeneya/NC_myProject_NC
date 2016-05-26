@@ -1,6 +1,6 @@
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="myProject.entities.PositionEntity" %>
-
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="myProject.entities.EmployeeEntity" %>
 <%--
   Created by IntelliJ IDEA.
   User: 1
@@ -34,15 +34,15 @@
 <div id="submenu_1" style="display:none;" onmouseout="hideMenu('1')">
   <ul>
     <li><a href="/listEmployee">Список cотрудников</a></li>
-    <li><a href="/newEmployee">Новый сотрудник</a></li>
-    <li><a href="/findEmployee">Поиск сотрудников</a></li>
+    <li><a href="/new_updateEmployee?new=true&res=false">Новый сотрудник</a></li>
+    <li><a href="/findEmployee?res=false">Поиск сотрудников</a></li>
   </ul>
 </div>
 <div id="submenu_2" style="display:none;" onmouseout="hideMenu('2')">
   <ul>
     <li><a href="/listPosition">Список должностей</a></li>
-    <li><a href="/newPosition">Новая должность</a></li>
-    <li><a href="/findPosition?res=false">Поиск по должностям</a></li>
+    <li><a href="/new_updatePosition?new=true&res=false">Новая должность</a></li>
+    <li><a href="/findPosition">Поиск по должностям</a></li>
   </ul>
 </div>
 <div id="submenu_3" style="display:none;" onmouseout="hideMenu('3')">
@@ -73,17 +73,27 @@
     <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%String res = (String) request.getAttribute("res");%>
-<form action="/findPosition">
-  <h2>Поиск должности</h2>
-  <h3>Критерий поиска:</h3>
+<%if (request.getAttribute("new").equals("true")){
+String res = (String) request.getAttribute("res");%>
+<form action="/new_updatePosition">
+  <h2>Новая должность</h2>
+  <input name="new" value="true" type="hidden">
   <input name="res" value="true" type="hidden">
-  <p>Название: <input type="text" size="30px" name="name" value="<%=(request.getAttribute("name")==null)?"":request.getAttribute("name")%>"></p>
-  <button id="findPosButton" type="submit"><b>Найти</b></button>
+  <div class="divNewPosText">
+    <p>Название:</p>
+    <p>Минимальная з/п:</p>
+    <p>Максимальная з/п:</p>
+  </div>
+  <div class="divNewPosData">
+    <p><input type="text" size="30px" name="name"></p>
+    <p><input type="text" size="7px" name="minsal"></p>
+    <p><input type="text" size="7px" name="maxsal"></p>
+  </div>
+  <button class="newPosButton" type="submit"><b>Добавить</b></button>
 </form>
 <%if (res.equals("true")){%>
-<table id="resultFindTable">
-  <caption>Результат поиска</caption>
+<table id="resultNewTable">
+  <caption>Новая должность успешно добавлена</caption>
   <tr>
     <th>id</th>
     <th>Название</th>
@@ -102,18 +112,38 @@
     <td>
       <a href="/updatePosition?id=<%=listPos.get(i).getId()%>">
         <button id="updateButton<%=listPos.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listPos.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listPos.get(i).getId()%>')" >
-          <img src="../image/update.png" width="25px" height="25px">
+          <img src="../../image/update.png" width="25px" height="25px">
         </button>
       </a>
     </td>
     <td>
       <button id="deleteButton<%=listPos.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listPos.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listPos.get(i).getId()%>')" onclick="deletePos(<%=listPos.get(i).getId()%>)">
-        <img src="../image/delete.png" width="25px" height="25px">
+        <img src="../../image/delete.png" width="25px" height="25px">
       </button>
     </td>
   </tr>
   <%}%>
 </table>
+<%}%>
+<%}
+else {%>
+<%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");%>
+<form action="/resultPosition">
+  <h2>Изменить сведения о должности</h2>
+  <input name="del" value="false" type="hidden">
+  <input name="id" value="<%=listPos.get(0).getId()%>" type="hidden">
+  <div class="divNewPosText">
+    <p>Название:</p>
+    <p>Минимальная з/п:</p>
+    <p>Максимальная з/п:</p>
+  </div>
+  <div class="divNewPosData">
+    <p><input type="text" size="30px" name="name" value="<%=listPos.get(0).getName()%>"></p>
+    <p><input type="text" size="7px" name="minsal" value="<%=listPos.get(0).getMin_salary()%>"></p>
+    <p><input type="text" size="7px" name="maxsal" value="<%=listPos.get(0).getMax_salary()%>"></p>
+  </div>
+  <button class="newPosButton" type="submit"><b>Изменить</b></button>
+</form>
 <%}%>
 </body>
 </html>

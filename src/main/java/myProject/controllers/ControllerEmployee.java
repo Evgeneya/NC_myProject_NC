@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -49,8 +48,6 @@ public class ControllerEmployee {
         }
     }
 
-
-    //@RequestMapping(value = "/resultFindEmployee", method = RequestMethod.GET)
     public String resultFindEmployee(ServletRequest request) {
         String name = request.getParameter("name");
         String posName = request.getParameter("position");

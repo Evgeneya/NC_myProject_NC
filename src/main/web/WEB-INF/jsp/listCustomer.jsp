@@ -1,6 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="myProject.entities.EmployeeEntity" %>
-<%@ page import="myProject.entities.PositionEntity" %>
+<%@ page import="myProject.entities.CustomerEntity" %>
 <%--
   Created by IntelliJ IDEA.
   User: 1
@@ -11,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link rel="stylesheet" type="text/css" href="../../css/base.css">
-<link rel="stylesheet" type="text/css" href="../../css/position.css">
+<link rel="stylesheet" type="text/css" href="../../css/customer.css">
 <script src="../../js/js.js"></script>
 <html>
 <head>
@@ -75,31 +74,29 @@
   </ul>
 </div>
   <table>
-    <caption>Список должностей компании</caption>
+    <caption>Список заказчиков</caption>
     <tr>
       <th>id</th>
-      <th>Название</th>
-      <th>Минимальная з/п</th>
-      <th>Максимальная з/п</th>
+      <th>ФИО</th>
+      <th>Телефон</th>
       <th class="notResizeCol">Изменение</th>
       <th class="notResizeCol">Удаление</th>
     </tr>
-    <% ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
-      for (int i=0; i < listPos.size(); i++){%>
+    <% ArrayList<CustomerEntity> listCust = (ArrayList<CustomerEntity>) request.getAttribute("listCust");
+      for (int i=0; i < listCust.size(); i++){%>
       <tr>
-        <td><%=listPos.get(i).getId()%></td>
-        <td><%=listPos.get(i).getName()%></td>
-        <td><%=listPos.get(i).getMin_salary()%></td>
-        <td><%=listPos.get(i).getMax_salary()%></td>
+        <td><%=listCust.get(i).getId()%></td>
+        <td><%=listCust.get(i).getName()%></td>
+        <td><%=listCust.get(i).getPhone()%></td>
         <td>
-          <a href="/new_updatePosition?new=false&id=<%=listPos.get(i).getId()%>">
-            <button id="updateButton<%=listPos.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listPos.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listPos.get(i).getId()%>')" >
+          <a href="/new_updateCustomer?new=false&id=<%=listCust.get(i).getId()%>">
+            <button id="updateButton<%=listCust.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listCust.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listCust.get(i).getId()%>')" >
               <img src="../../image/update.png" width="25px" height="25px">
             </button>
           </a>
         </td>
         <td>
-            <button id="deleteButton<%=listPos.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listPos.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listPos.get(i).getId()%>')" onclick="deletePos(<%=listPos.get(i).getId()%>)">
+            <button id="deleteButton<%=listCust.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listCust.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listCust.get(i).getId()%>')" onclick="deleteCust(<%=listCust.get(i).getId()%>)">
               <img src="../../image/delete.png" width="25px" height="25px">
             </button>
         </td>

@@ -11,4 +11,6 @@ public interface CustomerService {
     List<CustomerEntity> findAll();
     CustomerEntity save(CustomerEntity customer);
     void delete(Long id);
+    List<CustomerEntity> findByName(String name);
+    List<CustomerEntity> findById(long id);
 }

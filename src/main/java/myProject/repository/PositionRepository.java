@@ -12,6 +12,7 @@ import java.util.List;
  */
 public interface PositionRepository extends CrudRepository<PositionEntity, Long> {
     List<PositionEntity> findAll();
+    List<PositionEntity> findById(long id);
     List<PositionEntity> findByName(String name);
     List<PositionEntity> findByMinSalaryBetween(int zero, int minSal);
     List<PositionEntity> findByMaxSalaryBetween(int maxSal, int largeSal);

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.ServletRequest;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,92 +33,97 @@ public class ControllerPosition {
 
     @RequestMapping(value = "/findPosition", method = RequestMethod.GET)
     public String findPosition(ServletRequest request) {
-        return "findPosition";
+        if (request.getParameter("res").equals("true")){
+            return resultFindPosition(request);
+        }
+        else {
+            request.setAttribute("res", "false");
+            return "findPosition";
+        }
     }
 
-
-    @RequestMapping(value = "/resultFindPosition", method = RequestMethod.GET)
     public String resultFindPosition(ServletRequest request) {
         String name = request.getParameter("name");
         PositionService pos = context.getBean("jpaPositionService", PositionService.class);
         List<PositionEntity> listPos = pos.findByName(name);
         request.setAttribute("listPos", listPos);
         request.setAttribute("name", name);
-        return "resultFindPosition";
+        request.setAttribute("res", "true");
+        return "findPosition";
     }
 
-    /*@RequestMapping(value = "/newEmployee", method = RequestMethod.GET)
-    public String newEmployee(ServletRequest request){
-        PositionService pos = context.getBean("jpaPositionService", PositionService.class);
-        List<PositionEntity> listPos = pos.findAll();
+    @RequestMapping(value = "/new_updatePosition", method = RequestMethod.GET)
+    public String newPosition(ServletRequest request) {
+        if (request.getParameter("new").equals("true")) {
+            if (request.getParameter("res").equals("true")) {
+                return resultNewPosition(request);
+            } else {
+                request.setAttribute("new", "true");
+                request.setAttribute("res", "false");
+                return "new_updatePosition";
+            }
+        } else {
+            return updatePosition(request);
+        }
+    }
+
+    public String resultNewPosition(ServletRequest request) {
+        PositionService posService = context.getBean("jpaPositionService", PositionService.class);
+        PositionEntity newPos = new PositionEntity();
+        newPos.setName(request.getParameter("name"));
+        newPos.setMin_salary(Integer.parseInt(request.getParameter("minsal")));
+        newPos.setMax_salary(Integer.parseInt(request.getParameter("maxsal")));
+        newPos = posService.save(newPos);
+        List<PositionEntity> listPos = posService.findById(newPos.getId());
         request.setAttribute("listPos", listPos);
-        return "newEmployee";
-    }*/
+        request.setAttribute("new", "true");
+        request.setAttribute("res", "true");
+        return "new_updatePosition";
+    }
 
-    /*@RequestMapping(value = "/resultNewEmployee", method = RequestMethod.GET)
-    public String resultNewEmployee(ServletRequest request) {
-        PositionService pos = context.getBean("jpaPositionService", PositionService.class);
-        List<PositionEntity> listPos = pos.findAll();
+    public String updatePosition(ServletRequest request) {
+        long id = Long.parseLong(request.getParameter("id"));
+        PositionService posService = context.getBean("jpaPositionService", PositionService.class);
+        List<PositionEntity> listPos = posService.findById(id);
         request.setAttribute("listPos", listPos);
-        EmployeeEntity emp =new EmployeeEntity();
-        emp.setName(request.getParameter("name"));
-        PositionEntity empPos =  (pos.findByName((String) request.getParameter("position"))).get(0);
-        emp.setPosition(empPos);
-        emp.setExperience(Integer.parseInt(request.getParameter("exp")));
-        emp.setSalary(Integer.parseInt(request.getParameter("sal")));
-        emp.setEmail(request.getParameter("email1") + "@" + request.getParameter("email2"));
-        emp.setPhone(request.getParameter("phone"));
-        emp.setAge(Integer.parseInt(request.getParameter("age")));
-        emp.setStatus(request.getParameter("status"));
-        EmployeeService empService = context.getBean("jpaEmployeeService", EmployeeService.class);
-        emp = empService.save(emp);
-        List<EmployeeEntity> listEmp = empService.findById(emp.getId());
-        request.setAttribute("listEmp", listEmp);
-        return "resultNewEmployee";
-    }*/
+        request.setAttribute("new", "false");
+        return "new_updatePosition";
+    }
 
-    /*@RequestMapping(value = "/resultDeleteEmployee", method = RequestMethod.GET)
-    public String deleteEmployee(ServletRequest request) {
-        long id = Long.parseLong(request.getParameter("id"));
-        //EmploymentService employmentService = context.getBean("jpaEmploymentService", EmploymentService.class);
-        //employmentService.deleteEmploymentByEmployeeId(id);
-        EmployeeService empService = context.getBean("jpaEmployeeService", EmployeeService.class);
-        List<EmployeeEntity> listEmp = empService.findById(id);
-        empService.delete(listEmp.get(0));
-        return "resultDeleteEmployee";
-    }*/
+    @RequestMapping(value = "/resultPosition", method = RequestMethod.GET)
+    public String resultPosition(ServletRequest request){
+        if (request.getParameter("del").equals("true")) {
+            return resultDeletePosition(request);
+        }
+        else {
+            return resultUpdatePosition(request);
+        }
+    }
 
-    /*@RequestMapping(value = "/updateEmployee", method = RequestMethod.GET)
-    public String updateEmployee(ServletRequest request) {
+    public String resultDeletePosition(ServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
+        PositionService posService = context.getBean("jpaPositionService", PositionService.class);
+        List<PositionEntity> listPos = posService.findById(id);
         EmployeeService empService = context.getBean("jpaEmployeeService", EmployeeService.class);
-        List<EmployeeEntity> listEmp = empService.findById(id);
-        request.setAttribute("listEmp", listEmp);
-        PositionService pos = context.getBean("jpaPositionService", PositionService.class);
-        List<PositionEntity> listPos = pos.findAll();
-        request.setAttribute("listPos", listPos);
-        return "updateEmployee";
-    }*/
+        Collection<EmployeeEntity> employees = listPos.get(0).getEmployees();
+        for (Iterator i = employees.iterator(); i.hasNext();){
+            empService.delete(((EmployeeEntity) i.next()).getId());
+        }
+        posService.delete(id);
+        request.setAttribute("del", "true");
+        return "resultPosition";
+    }
 
-    /*@RequestMapping(value = "/resultUpdateEmployee", method = RequestMethod.GET)
-    public String resultUpdateEmployee(ServletRequest request) {
+    public String resultUpdatePosition(ServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
-        EmployeeService empService = context.getBean("jpaEmployeeService", EmployeeService.class);
-        List<EmployeeEntity> listEmp = empService.findById(id);
-        empService.delete(listEmp.get(0));
-        EmployeeEntity emp =new EmployeeEntity();
-        emp.setId(id);
-        emp.setName(request.getParameter("name"));
-        PositionService pos = context.getBean("jpaPositionService", PositionService.class);
-        PositionEntity empPos =  (pos.findByName((String) request.getParameter("position"))).get(0);
-        emp.setPosition(empPos);
-        emp.setExperience(Integer.parseInt(request.getParameter("exp")));
-        emp.setSalary(Integer.parseInt(request.getParameter("sal")));
-        emp.setEmail(request.getParameter("email1") + "@" + request.getParameter("email2"));
-        emp.setPhone(request.getParameter("phone"));
-        emp.setAge(Integer.parseInt(request.getParameter("age")));
-        emp.setStatus(request.getParameter("status"));
-        emp = empService.save(emp);
-        return "resultUpdateEmployee";
-    }*/
+        PositionService posService = context.getBean("jpaPositionService", PositionService.class);
+        PositionEntity pos = new PositionEntity();
+        pos.setId(id);
+        pos.setName(request.getParameter("name"));
+        pos.setMin_salary(Integer.parseInt(request.getParameter("minsal")));
+        pos.setMax_salary(Integer.parseInt(request.getParameter("maxsal")));
+        posService.save(pos);
+        request.setAttribute("del", "false");
+        return "resultPosition";
+    }
 }

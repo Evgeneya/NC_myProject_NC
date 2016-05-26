@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface PositionService {
     List<PositionEntity> findAll();
+    List<PositionEntity> findById(long id);
     PositionEntity save(PositionEntity position);
     void delete(Long id);
     List<PositionEntity> findByName(String name);

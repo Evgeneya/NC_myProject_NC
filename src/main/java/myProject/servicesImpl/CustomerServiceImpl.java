@@ -36,4 +36,12 @@ public class CustomerServiceImpl implements CustomerService {
         customerRepository.delete(id);
         return;
     }
+
+    public List<CustomerEntity> findByName(String name){
+        return customerRepository.findByName(name);
+    }
+
+    public List<CustomerEntity> findById(long id){
+        return customerRepository.findById(id);
+    }
 }

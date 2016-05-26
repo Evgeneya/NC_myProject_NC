@@ -30,16 +30,24 @@ function unselectButton(id){
     button.style.borderColor = 'white';
 }
 function deleteEmp(id){
-    var x=confirm("Все записи в таблице занятости с этим сотрудником будут также удалены.\n Вы действительно хотите удалить сотрудника?");
+    var x=confirm("Все записи в таблице занятости с этим сотрудником будут также удалены.\nВы действительно хотите удалить сотрудника?");
     if (x==true){
         document.location.href = "/resultEmployee?del=true&id=" + id;
     }
     else return;
 }
 function deletePos(id){
-    var x=confirm("Вы действительно хотите удалить должность?");
+    var x=confirm("Все сотрудники, занимающие эту должность будут также удалены.\nВы действительно хотите удалить должность?");
     if (x==true){
-        document.location.href = "/resultDeletePosition?id=" + id;
+        document.location.href = "/resultPosition?del=true&id=" + id;
     }
     else return;
+}
+function deleteCust(id){
+    var x=confirm("Все проекты данного заказчика будут также удалены.\nВы действительно хотите удалить заказчика?");
+    if (x==true){
+        document.location.href = "/resultCustomer?del=true&id=" + id;
+    }
+    else return;
+
 }

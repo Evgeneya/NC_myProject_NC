@@ -26,6 +26,10 @@ public class PositionServiceImpl implements PositionService {
         return positionRepository.findAll();
     }
 
+    public List<PositionEntity> findById(long id){
+        return positionRepository.findById(id);
+    }
+
     public PositionEntity save(PositionEntity position){
         return positionRepository.save(position);
     }

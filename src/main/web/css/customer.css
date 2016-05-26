@@ -1,8 +1,8 @@
 table{
-    width: 800px;
+    width: 600px;
 }
 
-#findPosButton{
+#findCustButton{
     position: absolute;
     left: 120px;
 }
@@ -11,16 +11,16 @@ table{
     top: 300px;
 }
 
-.divNewPosText{
+.divNewCustText{
     font-size: 16.5px;
 }
-.divNewPosData{
+.divNewCustData{
     position: absolute;
     top: 50px;
     left: 150px;
 }
 
-.newPosButton{
+.newCustButton{
     position: absolute;
     left: 70px;
 }

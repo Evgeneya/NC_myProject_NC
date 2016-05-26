@@ -36,8 +36,8 @@
   <div id="submenu_2" style="display:none;" onmouseout="hideMenu('2')">
     <ul>
       <li><a href="/listPosition">Список должностей</a></li>
-      <li><a href="/newPosition">Новая должность</a></li>
-      <li><a href="/findPosition">Поиск по должностям</a></li>
+      <li><a href="/new_updatePosition?new=true&res=false">Новая должность</a></li>
+      <li><a href="/findPosition?res=false">Поиск по должностям</a></li>
     </ul>
   </div>
   <div id="submenu_3" style="display:none;" onmouseout="hideMenu('3')">
@@ -57,8 +57,8 @@
   <div id="submenu_5" style="display:none;" onmouseout="hideMenu('5')">
     <ul>
       <li><a href="/listCustomer">Список заказчиков</a></li>
-      <li><a href="/newCustomer">Новый заказчик</a></li>
-      <li><a href="/findCustomer">Поиск заказчиков</a></li>
+      <li><a href="/new_updateCustomer?new=true&res=false">Новый заказчик</a></li>
+      <li><a href="/findCustomer?res=false">Поиск заказчиков</a></li>
     </ul>
   </div>
   <div id="submenu_6" style="display:none;" onmouseout="hideMenu('6')">
