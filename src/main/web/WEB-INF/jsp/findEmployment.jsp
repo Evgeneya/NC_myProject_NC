@@ -1,6 +1,8 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="myProject.entities.PositionEntity" %>
+<%@ page import="java.util.List" %>
 <%@ page import="myProject.entities.EmployeeEntity" %>
+<%@ page import="myProject.entities.ProjectEntity" %>
+<%@ page import="myProject.entities.EmploymentEntity" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -11,12 +13,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" type="text/css" href="../../css/base.css">
-<link rel="stylesheet" type="text/css" href="../../css/employee.css">
+<link rel="stylesheet" type="text/css" href="../../css/employment.css">
 <script src="../../js/js.js"></script>
 <html>
 <head>
   <title>My Project</title>
-
 </head>
 <body>
 <div id="header">
@@ -37,14 +38,14 @@
   <ul>
     <li><a href="/listEmployee">Список cотрудников</a></li>
     <li><a href="/newEmployee">Новый сотрудник</a></li>
-    <li><a href="/findEmployee?res=false">Поиск сотрудников</a></li>
+    <li><a href="/findEmployee">Поиск сотрудников</a></li>
   </ul>
 </div>
 <div id="submenu_2" style="display:none;" onmouseout="hideMenu('2')">
   <ul>
     <li><a href="/listPosition">Список должностей</a></li>
     <li><a href="/newPosition">Новая должность</a></li>
-    <li><a href="/findPosition">Поиск по должностям</a></li>
+    <li><a href="/findPosition?res=false">Поиск по должностям</a></li>
   </ul>
 </div>
 <div id="submenu_3" style="display:none;" onmouseout="hideMenu('3')">
@@ -76,63 +77,76 @@
   </ul>
 </div>
 <%String res = (String) request.getAttribute("res");%>
-  <form action="/findEmployee">
-    <h2>Поиск сотрудников</h2>
-    <h3>Критерии поиска:</h3>
-    <input name="res" value="true" type="hidden">
-    <p>ФИО: <input type="text" size="30px" name="name" value="<%=(request.getAttribute("name")==null)?"":request.getAttribute("name")%>"></p>
-    <p>Должность: <select name="position">
-                  <option></option>
-                  <%ArrayList<PositionEntity> listPos = (ArrayList<PositionEntity>) request.getAttribute("listPos");
-                    for (int i = 0; i < listPos.size(); i++) {
-                      if ((request.getAttribute("position") != null) && request.getAttribute("position").equals(listPos.get(i).getName())){%>
-                        <option selected><%=listPos.get(i).getName()%></option>
-                      <%}else%>
-                        <option><%=listPos.get(i).getName()%></option>
-                    <%}%>
-                  </select>
-    </p>
-    <p>Опыт работы:   от <input type="text" size="3px" name="exp1" value="<%=(request.getAttribute("exp1")==null)?"":request.getAttribute("exp1")%>">  до <input type="text" size="3px" name="exp2" value="<%=(request.getAttribute("exp2")==null)?"":request.getAttribute("exp2")%>"></p>
-    <p>Заработная плата:   от <input type="text" size="7px" name="sal1" value="<%=(request.getAttribute("sal1")==null)?"":request.getAttribute("sal1")%>">  до <input type="text" size="7px" name="sal2" value="<%=(request.getAttribute("sal2")==null)?"":request.getAttribute("sal2")%>"></p>
-    <button id="findEmpButton" type="submit"><b>Найти</b></button>
-  </form>
+<form action="/findEmployment">
+  <h2>Поиск по занятости сотрудников в проектах</h2>
+  <h3>Критерии поиска:</h3>
+  <input name="res" value="true" type="hidden">
+  <p>Сотрудник:
+  <select name="employee">
+    <option></option>
+    <%List<EmployeeEntity> listEmp = (List<EmployeeEntity>) request.getAttribute("listEmp");
+      for (int i = 0; i < listEmp.size(); i++) {
+        if ((request.getAttribute("employee") != null) && request.getAttribute("employee").equals(listEmp.get(i).getName())){%>
+          <option selected><%=listEmp.get(i).getName()%></option>
+        <%}else {%>
+          <option><%=listEmp.get(i).getName()%></option>
+        <%}
+      }%>
+  </select>
+  </p>
+  <p>Проект:
+    <select name="project">
+      <option></option>
+      <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
+        for (int i = 0; i < listPro.size(); i++) {
+          if ((request.getAttribute("project") != null) && request.getAttribute("project").equals(listPro.get(i).getName())){%>
+            <option selected><%=listPro.get(i).getName()%></option>
+          <%}else {%>
+            <option><%=listPro.get(i).getName()%></option>
+          <%}
+        }%>
+    </select>
+  </p>
+  <p>
+    <select>
+      <%for (int i = 1; i <= 40; i++){
+        if (request.getAttribute("hour") != "" && Integer.parseInt((String) request.getAttribute("hour"))==i){%>
+            <option selected><%=i%></option>
+        <%} else{%>
+            <option><%=i%></option>
+        <%}
+      }%>
+    </select>
+  </p>
+  <button id="findEmplButton" type="submit"><b>Найти</b></button>
+</form>
 <%if (res.equals("true")){%>
 <table id="resultFindTable">
-  <caption>Результаты поиска:</caption>
+  <caption>Результат поиска</caption>
   <tr>
     <th>id</th>
-    <th>ФИО</th>
-    <th>Должность</th>
-    <th>Email</th>
-    <th>Телефон</th>
-    <th>Возраст</th>
-    <th>Семейное положение</th>
-    <th>Опыт работы</th>
-    <th>Заработная плата</th>
+    <th>Сотрудник</th>
+    <th>Название проекта</th>
+    <th>Кол-во часов</th>
     <th class="notResizeCol">Изменение</th>
     <th class="notResizeCol">Удаление</th>
   </tr>
-  <% ArrayList<EmployeeEntity> listEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listEmp");
-    for (int i=0; i < listEmp.size(); i++){%>
+  <% ArrayList<EmploymentEntity> listEmpl = (ArrayList<EmploymentEntity>) request.getAttribute("listEmpl");
+    for (int i=0; i < listEmpl.size(); i++){%>
   <tr>
-    <td><%=listEmp.get(i).getId()%></td>
-    <td><%=listEmp.get(i).getName()%></td>
-    <td><%=listEmp.get(i).getPosition().getName()%></td>
-    <td><%=listEmp.get(i).getEmail()%></td>
-    <td><%=listEmp.get(i).getPhone()%></td>
-    <td><%=listEmp.get(i).getAge()%></td>
-    <td><%=listEmp.get(i).getStatus()%></td>
-    <td><%=listEmp.get(i).getExperience()%></td>
-    <td><%=listEmp.get(i).getSalary()%></td>
+    <td><%=listEmpl.get(i).getId()%></td>
+    <td><%=listEmpl.get(i).getEmployee().getName()%></td>
+    <td><%=listEmpl.get(i).getProject().getName()%></td>
+    <td><%=listEmpl.get(i).getCount_hour()%></td>
     <td>
-      <a href="/updateEmployee?new=false&id=<%=listEmp.get(i).getId()%>">
-        <button id="updateButton<%=listEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmp.get(i).getId()%>')" >
+      <a href="/new_updateEmployment?new=false&id=<%=listEmpl.get(i).getId()%>">
+        <button id="updateButton<%=listEmpl.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmpl.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmpl.get(i).getId()%>')" >
           <img src="../../image/update.png" width="25px" height="25px">
         </button>
       </a>
     </td>
     <td>
-      <button id="deleteButton<%=listEmp.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listEmp.get(i).getId()%>')" onclick="deleteEmp(<%=listEmp.get(i).getId()%>)">
+      <button id="deleteButton<%=listEmpl.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listEmpl.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listEmpl.get(i).getId()%>')" onclick="deleteEmpl(<%=listEmpl.get(i).getId()%>)">
         <img src="../../image/delete.png" width="25px" height="25px">
       </button>
     </td>

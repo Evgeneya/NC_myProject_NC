@@ -72,4 +72,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeEntity> findByNameAndPositionIdAndExperienceBetweenAndSalaryBetween(String name, long position_id, int exp1, int exp2, int sal1, int sal2){
         return employeeRepository.findByNameAndPositionIdAndExperienceBetweenAndSalaryBetween(name, position_id, exp1, exp2, sal1, sal2);
     }
+
+    public List<EmployeeEntity> findByPositionIdAndEmploymentsProjectIdOrderByEmploymentsCountHourAsc(long position_id, long project_id){
+        return employeeRepository.findByPositionIdAndEmploymentsProjectIdOrderByEmploymentsCountHourAsc(position_id, project_id);
+    }
+
+    public List<EmployeeEntity> findByPositionIdAndEmploymentsProjectIdOrPositionIdOrderByEmploymentsCountHourAsc(long position_id, long project_id, long position_id2){
+        return employeeRepository.findByPositionIdAndEmploymentsProjectIdOrPositionIdOrderByEmploymentsCountHourAsc(position_id, project_id, position_id2);
+    }
+
+    public List<EmployeeEntity> findByPositionIdOrderByEmploymentsCountHourAsc(long position_id){
+        return employeeRepository.findByPositionIdOrderByEmploymentsCountHourAsc(position_id);
+    }
+
+    public List<EmployeeEntity> findSortEmployee(long position_id){
+        return employeeRepository.findSortEmployee();
+    }
 }

@@ -121,7 +121,7 @@ public class ControllerEmployee {
         request.setAttribute("listPos", listPos);
         EmployeeEntity emp =new EmployeeEntity();
         emp.setName(request.getParameter("name"));
-        PositionEntity empPos =  (pos.findByName((String) request.getParameter("position"))).get(0);
+        PositionEntity empPos =  (pos.findByName(request.getParameter("position"))).get(0);
         emp.setPosition(empPos);
         emp.setExperience(Integer.parseInt(request.getParameter("exp")));
         emp.setSalary(Integer.parseInt(request.getParameter("sal")));

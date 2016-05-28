@@ -43,8 +43,8 @@
   <div id="submenu_3" style="display:none;" onmouseout="hideMenu('3')">
     <ul>
       <li><a href="/listProject">Список проектов</a></li>
-      <li><a href="/newProject">Новый проект</a></li>
-      <li><a href="/findProject">Поиск по проектам</a></li>
+      <li><a href="/new_updateProject?new=true&res=false">Новый проект</a></li>
+      <li><a href="/findProject?res=false">Поиск по проектам</a></li>
     </ul>
   </div>
   <div id="submenu_4" style="display:none;" onmouseout="hideMenu('4')">

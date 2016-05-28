@@ -26,7 +26,7 @@ public class EmploymentEntity {
 
 
     @Column(name="count_hour")
-    private int count_hour;
+    private int countHour;
 
     public EmploymentEntity(){
 
@@ -57,10 +57,10 @@ public class EmploymentEntity {
     }
 
     public int getCount_hour() {
-        return count_hour;
+        return countHour;
     }
 
     public void setCount_hour(int count_hour) {
-        this.count_hour = count_hour;
+        this.countHour = count_hour;
     }
 }

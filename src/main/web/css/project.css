@@ -1,0 +1,45 @@
+table{
+    width: 800px;
+}
+
+#findProButton{
+    position: absolute;
+    left: 150px;
+}
+
+#resultFindTable{
+    top: 380px;
+}
+
+.divNewProText{
+    font-size: 16.5px;
+}
+.divNewProData{
+    position: absolute;
+    top: 50px;
+    left: 150px;
+}
+
+.newProButton{
+    position: absolute;
+    left: 90px;
+}
+
+#resultNewTable{
+    top: 340px;
+}
+
+.autoButton{
+    background-color: #111145;
+    width: 80px;
+    height: 30px;
+    border-color: white;
+}
+
+#resultNewEmpTable{
+
+}
+
+#resultOldEmpTable{
+
+}

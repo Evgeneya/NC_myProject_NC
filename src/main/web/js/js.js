@@ -22,13 +22,18 @@ function selectButton(id){
         button.style.borderColor = 'greenyellow';
     }
     else{
-        button.style.borderColor = 'red';
+        if (id.toString().substr(0, 12)== "deleteButton"){
+            button.style.borderColor = 'red';
+        }
+        else
+            button.style.borderColor = 'green';
     }
 }
 function unselectButton(id){
     var button = document.getElementById(id);
     button.style.borderColor = 'white';
 }
+
 function deleteEmp(id){
     var x=confirm("Все записи в таблице занятости с этим сотрудником будут также удалены.\nВы действительно хотите удалить сотрудника?");
     if (x==true){
@@ -50,4 +55,27 @@ function deleteCust(id){
     }
     else return;
 
+}
+function deletePro (id) {
+    var x=confirm("Вы действительно хотите удалить проект?");
+    if (x==true){
+        document.location.href = "/resultProject?del=true&id=" + id;
+    }
+    else return;
+}
+
+function deleteEmpl(id) {
+    var x=confirm("Вы действительно хотите удалить запись о занятости?");
+    if (x==true){
+        document.location.href = "/resultEmployment?del=true&id=" + id;
+    }
+    else return;
+}
+
+function deletePlan(id) {
+    var x=confirm("Вы действительно хотите удалить запись ресурсного плана?");
+    if (x==true){
+        document.location.href = "/resultResources_plan?del=true&id=" + id;
+    }
+    else return;
 }

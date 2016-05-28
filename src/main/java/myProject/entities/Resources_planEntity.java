@@ -20,23 +20,44 @@ public class Resources_planEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "position_id")
-    private ProjectEntity position;
+    private PositionEntity position;
 
-    @Column(name="man_hour")
-    private int man_hour;
+    @Column(name="hour")
+    private int hour;
 
     public Resources_planEntity(){
 
     }
 
-
-
-
-    public int getMan_hour() {
-        return man_hour;
+    public long getId() {
+        return id;
     }
 
-    public void setMan_hour(int man_hour) {
-        this.man_hour = man_hour;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public ProjectEntity getProject() {
+        return project;
+    }
+
+    public void setProject(ProjectEntity project) {
+        this.project = project;
+    }
+
+    public PositionEntity getPosition() {
+        return position;
+    }
+
+    public void setPosition(PositionEntity position) {
+        this.position = position;
+    }
+
+    public int getHour() {
+        return hour;
+    }
+
+    public void setHour(int man_hour) {
+        this.hour = man_hour;
     }
 }
