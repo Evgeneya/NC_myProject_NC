@@ -25,10 +25,10 @@ public class PositionEntity {
     @Column(name="max_salary")
     private int maxSalary;
 
-    @OneToMany(mappedBy = "position")
+    @OneToMany(mappedBy = "position", cascade = CascadeType.REMOVE)
     private Collection<EmployeeEntity> employees;
 
-    @OneToMany(mappedBy = "position")
+    @OneToMany(mappedBy = "position", cascade = CascadeType.REMOVE)
     private Collection<Resources_planEntity> plans;
 
     public PositionEntity(){

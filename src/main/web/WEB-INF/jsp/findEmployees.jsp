@@ -124,7 +124,7 @@
     <td><%=listEmp.get(i).getExperience()%></td>
     <td><%=listEmp.get(i).getSalary()%></td>
     <td>
-      <a href="/updateEmployee?new=false&id=<%=listEmp.get(i).getId()%>">
+      <a href="/new_updateEmployee?new=false&id=<%=listEmp.get(i).getId()%>">
         <button id="updateButton<%=listEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmp.get(i).getId()%>')" >
           <img src="../../image/update.png" width="25px" height="25px">
         </button>

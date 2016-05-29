@@ -325,18 +325,6 @@ public class ControllerProject {
     public String resultDeleteProject(ServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
         ProjectService projectService= context.getBean("jpaProjectService", ProjectService.class);
-        EmploymentService employmentService = context.getBean("jpaEmploymentService", EmploymentService.class);
-        Resources_planService resources_planService = context.getBean("jpaResources_planService", Resources_planService.class);
-
-        List<ProjectEntity> listPro = projectService.findById(id);
-        Collection<EmploymentEntity> employmentEntities = listPro.get(0).getEmployments();
-        for (Iterator<EmploymentEntity> i = employmentEntities.iterator(); i.hasNext();) {
-            employmentService.delete((i.next()).getId());
-        }
-        Collection<Resources_planEntity> resources_planEntities = listPro.get(0).getPlans();
-        for (Iterator<Resources_planEntity> i = resources_planEntities.iterator(); i.hasNext();) {
-            resources_planService.delete((i.next()).getId());
-        }
         projectService.delete(id);
         request.setAttribute("del", "true");
         return "resultProject";

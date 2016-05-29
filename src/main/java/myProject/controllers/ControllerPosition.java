@@ -105,17 +105,6 @@ public class ControllerPosition {
     public String resultDeletePosition(ServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
         PositionService posService = context.getBean("jpaPositionService", PositionService.class);
-        List<PositionEntity> listPos = posService.findById(id);
-        EmployeeService empService = context.getBean("jpaEmployeeService", EmployeeService.class);
-        Collection<EmployeeEntity> employees = listPos.get(0).getEmployees();
-        for (Iterator i = employees.iterator(); i.hasNext();){
-            empService.delete(((EmployeeEntity) i.next()).getId());
-        }
-        Resources_planService resources_planService = context.getBean("jpaResources_planService", Resources_planService.class);
-        Collection<Resources_planEntity> resources_planEntities = listPos.get(0).getPlans();
-        for (Iterator<Resources_planEntity> i = resources_planEntities.iterator(); i.hasNext();) {
-            resources_planService.delete((i.next()).getId());
-        }
         posService.delete(id);
         request.setAttribute("del", "true");
         return "resultPosition";

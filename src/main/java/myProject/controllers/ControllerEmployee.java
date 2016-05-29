@@ -164,12 +164,6 @@ public class ControllerEmployee {
     public String resultDeleteEmployee(ServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
         EmployeeService empService = context.getBean("jpaEmployeeService", EmployeeService.class);
-        List<EmployeeEntity> listEmp = empService.findById(id);
-        EmploymentService employmentService = context.getBean("jpaEmploymentService", EmploymentService.class);
-        Collection<EmploymentEntity> employment = listEmp.get(0).getEmployments();
-        for (Iterator i = employment.iterator(); i.hasNext();){
-            employmentService.delete(((EmploymentEntity) i.next()).getId());
-        }
         empService.delete(id);
         request.setAttribute("del", "true");
         return "resultEmployee";

@@ -42,7 +42,7 @@ public class EmployeeEntity {
     @JoinColumn(name = "position_id")
     private PositionEntity position;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     private Collection<EmploymentEntity> employments;
 
     public EmployeeEntity(){

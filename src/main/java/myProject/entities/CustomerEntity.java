@@ -21,7 +21,7 @@ public class CustomerEntity {
     @Column(name="phone")
     private String phone;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Collection<ProjectEntity> projects;
 
 

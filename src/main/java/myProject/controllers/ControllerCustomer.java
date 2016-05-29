@@ -102,12 +102,6 @@ public class ControllerCustomer {
     public String resultDeleteCustomer(ServletRequest request) {
         long id = Long.parseLong(request.getParameter("id"));
         CustomerService customerService = context.getBean("jpaCustomerService", CustomerService.class);
-        List<CustomerEntity> listCust = customerService.findById(id);
-        ProjectService projectService = context.getBean("jpaProjectService", ProjectService.class);
-        Collection<ProjectEntity> projects = listCust.get(0).getProjects();
-        for (Iterator i = projects.iterator(); i.hasNext();) {
-            projectService.delete(((ProjectEntity)i.next()).getId());
-        }
         customerService.delete(id);
         request.setAttribute("del", "true");
         return "resultCustomer";
