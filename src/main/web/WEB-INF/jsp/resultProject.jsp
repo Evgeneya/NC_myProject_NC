@@ -71,11 +71,16 @@
     <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%if (request.getAttribute("del").equals("true")){%>
-  <h3 class="Message">Сотрудник успешно удален</h3>
+<%if (request.getAttribute("auto").equals("true")){%>
+  <h3 class="Message">Записи в распределение проектов успешно добавлены</h3>
 <%}
 else{%>
-  <h3 class="Message">Информация о сотруднике успешно изменена</h3>
-<%}%>
+    <%if (request.getAttribute("del").equals("true")){%>
+        <h3 class="Message">Проект успешно удален</h3>
+    <%}
+    else{%>
+        <h3 class="Message">Информация о проекте успешно изменена</h3>
+    <%}
+}%>
 </body>
 </html>

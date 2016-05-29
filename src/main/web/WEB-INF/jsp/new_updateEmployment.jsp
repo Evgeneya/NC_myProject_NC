@@ -1,9 +1,9 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
+<%@ page import="myProject.entities.CustomerEntity" %>
 <%@ page import="myProject.entities.EmployeeEntity" %>
+<%@ page import="java.util.List" %>
 <%@ page import="myProject.entities.ProjectEntity" %>
 <%@ page import="myProject.entities.EmploymentEntity" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: 1
@@ -75,42 +75,47 @@
     <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%String res = (String) request.getAttribute("res");%>
-<form action="/findEmployment">
-  <h2>Поиск по занятости сотрудников в проектах</h2>
-  <h3>Критерии поиска:</h3>
+<%if (request.getAttribute("new").equals("true")){
+String res = (String) request.getAttribute("res");%>
+<form action="/new_updateEmployment">
+  <h2>Новая занятость сотрудника в проекте</h2>
+  <input name="new" value="true" type="hidden">
   <input name="res" value="true" type="hidden">
-  <p>Сотрудник:
-  <select name="employee">
-    <option></option>
-    <%List<EmployeeEntity> listEmp = (List<EmployeeEntity>) request.getAttribute("listEmp");
-      for (int i = 0; i < listEmp.size(); i++) {
-        if ((request.getAttribute("employee") != null) && request.getAttribute("employee").equals(listEmp.get(i).getName())){%>
-          <option selected><%=listEmp.get(i).getName()%></option>
-        <%}else {%>
-          <option><%=listEmp.get(i).getName()%></option>
-        <%}
-      }%>
-  </select>
-  </p>
-  <p>Проект:
-    <select name="project">
-      <option></option>
-      <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
-        for (int i = 0; i < listPro.size(); i++) {
-          if ((request.getAttribute("project") != null) && request.getAttribute("project").equals(listPro.get(i).getName())){%>
-            <option selected><%=listPro.get(i).getName()%></option>
-          <%}else {%>
+  <div class="divNewEmplText">
+    <p>Сотрудник:</p>
+    <p>Проект:</p>
+    <p>Кол-во часов</p>
+  </div>
+  <div class="divNewEmplData">
+    <p>
+      <select name="employee">
+        <%List<EmployeeEntity> listEmp = (List<EmployeeEntity>) request.getAttribute("listEmp");
+          for (int i = 0; i < listEmp.size(); i++) {%>
+            <option><%=listEmp.get(i).getName()%></option>
+        <%}%>
+      </select>
+    </p>
+    <p>
+      <select name="project">
+        <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
+          for (int i = 0; i < listPro.size(); i++) {%>
             <option><%=listPro.get(i).getName()%></option>
-          <%}
-        }%>
-    </select>
-  </p>
-  <button id="findEmplButton" type="submit"><b>Найти</b></button>
+        <%}%>
+      </select>
+    </p>
+    <p>
+      <select name="hour">
+        <%for (int i = 1; i <= 40; i++){%>
+            <option><%=i%></option>
+        <%}%>
+      </select>
+    </p>
+  </div>
+  <button class="newEmplButton" type="submit"><b>Добавить</b></button>
 </form>
 <%if (res.equals("true")){%>
-<table id="resultFindTable">
-  <caption>Результат поиска</caption>
+<table id="resultNewTable">
+  <caption>Новая запись о занятости успешно добавлена</caption>
   <tr>
     <th>id</th>
     <th>Сотрудник</th>
@@ -141,6 +146,58 @@
   </tr>
   <%}%>
 </table>
+<%}%>
+<%}
+else {%>
+<%ArrayList<EmploymentEntity> listEmpl = (ArrayList<EmploymentEntity>) request.getAttribute("listEmpl");%>
+<form action="/resultEmployment">
+  <h2>Изменить сведения о занятости</h2>
+  <input name="del" value="false" type="hidden">
+  <input name="id" value="<%=listEmpl.get(0).getId()%>" type="hidden">
+  <div class="divNewEmplText">
+    <p>Сотрудник:</p>
+    <p>Проект:</p>
+    <p>Кол-во часов</p>
+  </div>
+  <div class="divNewEmplData">
+    <p>
+      <select name="employee">
+        <%List<EmployeeEntity> listEmp = (List<EmployeeEntity>) request.getAttribute("listEmp");
+          for (int i = 0; i < listEmp.size(); i++) {
+            if ((request.getAttribute("employee") != null) && request.getAttribute("employee").equals(listEmp.get(i).getName())){%>
+        <option selected><%=listEmp.get(i).getName()%></option>
+        <%}else {%>
+        <option><%=listEmp.get(i).getName()%></option>
+        <%}
+        }%>
+      </select>
+    </p>
+    <p>
+      <select name="project">
+        <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
+          for (int i = 0; i < listPro.size(); i++) {
+            if ((request.getAttribute("project") != null) && request.getAttribute("project").equals(listPro.get(i).getName())){%>
+        <option selected><%=listPro.get(i).getName()%></option>
+        <%}else {%>
+        <option><%=listPro.get(i).getName()%></option>
+        <%}
+        }%>
+      </select>
+    </p>
+    <p>
+      <select name="hour">
+        <%for (int i = 1; i <= 40; i++){
+          if (request.getAttribute("hour")!=null && request.getAttribute("hour") != "" && Integer.parseInt((String) request.getAttribute("hour"))==i){%>
+        <option selected><%=i%></option>
+        <%} else{%>
+        <option><%=i%></option>
+        <%}
+        }%>
+      </select>
+    </p>
+  </div>
+  <button class="newEmplButton" type="submit"><b>Изменить</b></button>
+</form>
 <%}%>
 </body>
 </html>

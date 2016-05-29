@@ -75,6 +75,14 @@ public class PositionEntity {
         this.employees = employees;
     }
 
+    public Collection<Resources_planEntity> getPlans() {
+        return plans;
+    }
+
+    public void setPlans(Collection<Resources_planEntity> plans) {
+        this.plans = plans;
+    }
+
     @Override
     public String toString(){
         return "id = " + id + ", name = " + name + ", minSalary = " + minSalary + ", maxSalary = " + maxSalary + ";";

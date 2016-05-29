@@ -9,7 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" type="text/css" href="../../css/base.css">
-<link rel="stylesheet" type="text/css" href="../../css/project.css">
+<link rel="stylesheet" type="text/css" href="../../css/auto.css">
 <script src="../../js/js.js"></script>
 <html>
   <head>
@@ -53,8 +53,8 @@
   <div id="submenu_4" style="display:none;" onmouseout="hideMenu('4')">
     <ul>
       <li><a href="/listEmployment">Полный список</a></li>
-      <li><a href="/newEmployment">Назначить сотрудника на проект</a></li>
-      <li><a href="/findEmployment">Поиск по занятости</a></li>
+      <li><a href="/new_updateEmployment?new=true&res=false">Назначить сотрудника на проект</a></li>
+      <li><a href="/findEmployment?res=false">Поиск по занятости</a></li>
     </ul>
   </div>
   <div id="submenu_5" style="display:none;" onmouseout="hideMenu('5')">
@@ -67,24 +67,24 @@
   <div id="submenu_6" style="display:none;" onmouseout="hideMenu('6')">
     <ul>
       <li><a href="/listResources_plan">Список ресурсных планов</a></li>
-      <li><a href="/newResources_plan">Новый ресурсный план</a></li>
-      <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
+      <li><a href="/new_updateResources_plan?new=true&res=false">Новый ресурсный план</a></li>
+      <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
     </ul>
   </div>
   <h2>Результаты автоподбора</h2>
   <%if (request.getAttribute("res").equals("false")){%>
-      <p>На данный проект не назначен ресурсный план! Добавьте информацию c данным проектом в таблицу "Ресурсные планы" и повторите попытку.</p>
+      <p class="resP">На данный проект не назначен ресурсный план! Добавьте информацию c данным проектом в таблицу "Ресурсные планы" и повторите попытку.</p>
   <%}else
       if (request.getAttribute("full").equals("true")){%>
-        <p>Ресурсный план данного проекта полностью заполнен.</p>
+        <p class="resP">Ресурсный план данного проекта полностью заполнен.</p>
       <%}else
           if (request.getAttribute("emp").equals("false")){%>
-            <p>Не удалось подобрать сотрудников на данный проект.</p>
+            <p class="resP">Не удалось подобрать сотрудников на данный проект.</p>
           <%}
           else{%>
-              <h3>Выбранные сотрудники</h3>
+  <div id="resDiv">
   <table id="resultNewEmpTable">
-    <caption>Результаты поиска:</caption>
+    <caption>Выбранные сотрудники:</caption>
     <tr>
       <th>id</th>
       <th>ФИО</th>
@@ -95,10 +95,14 @@
       <th>Семейное положение</th>
       <th>Опыт работы</th>
       <th>Заработная плата</th>
-      <th class="notResizeCol">Изменение</th>
-      <th class="notResizeCol">Удаление</th>
+      <th>Кол-во часов</th>
     </tr>
     <% ArrayList<EmployeeEntity> listNewEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listNewEmp");
+      ArrayList<Integer> counts = (ArrayList<Integer>) request.getAttribute("counts");
+      session.setAttribute("listEmp", listNewEmp);
+      session.setAttribute("counts", counts);
+      session.setAttribute("projectId", request.getAttribute("id"));
+      ArrayList<Integer> oldCounts = (ArrayList<Integer>) request.getAttribute("oldCounts");
       for (int i=0; i < listNewEmp.size(); i++){%>
     <tr>
       <td><%=listNewEmp.get(i).getId()%></td>
@@ -110,24 +114,13 @@
       <td><%=listNewEmp.get(i).getStatus()%></td>
       <td><%=listNewEmp.get(i).getExperience()%></td>
       <td><%=listNewEmp.get(i).getSalary()%></td>
-      <td>
-        <a href="/updateEmployee?id=<%=listNewEmp.get(i).getId()%>">
-          <button id="updateButton<%=listNewEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listNewEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listNewEmp.get(i).getId()%>')" >
-            <img src="../../image/update.png" width="25px" height="25px">
-          </button>
-        </a>
-      </td>
-      <td>
-        <button id="deleteButton<%=listNewEmp.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listNewEmp.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listNewEmp.get(i).getId()%>')" onclick="deleteEmp(<%=listNewEmp.get(i).getId()%>)">
-          <img src="../../image/delete.png" width="25px" height="25px">
-        </button>
-      </td>
+      <td><%=counts.get(i)%></td>
     </tr>
     <%}%>
   </table>
-              <h3>Сотрудники, участвующие в проекте</h3>
+  <a href="/resultProject?del=false&auto=true"><button type="submit" id="goButton">Применить</button></a>
   <table id="resultOldEmpTable">
-    <caption>Результаты поиска:</caption>
+    <caption>Сотрудники, участвующие в проекте</caption>
     <tr>
       <th>id</th>
       <th>ФИО</th>
@@ -138,8 +131,7 @@
       <th>Семейное положение</th>
       <th>Опыт работы</th>
       <th>Заработная плата</th>
-      <th class="notResizeCol">Изменение</th>
-      <th class="notResizeCol">Удаление</th>
+      <th>Кол-во часов</th>
     </tr>
     <% ArrayList<EmployeeEntity> listOldEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listOldEmp");
       for (int i=0; i < listOldEmp.size(); i++){%>
@@ -153,21 +145,11 @@
       <td><%=listOldEmp.get(i).getStatus()%></td>
       <td><%=listOldEmp.get(i).getExperience()%></td>
       <td><%=listOldEmp.get(i).getSalary()%></td>
-      <td>
-        <a href="/new_updateEmployee?new=false&res=false&id=<%=listOldEmp.get(i).getId()%>">
-          <button id="updateButton<%=listOldEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listOldEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listOldEmp.get(i).getId()%>')" >
-            <img src="../../image/update.png" width="25px" height="25px">
-          </button>
-        </a>
-      </td>
-      <td>
-        <button id="deleteButton<%=listOldEmp.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listOldEmp.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listOldEmp.get(i).getId()%>')" onclick="deleteEmp(<%=listOldEmp.get(i).getId()%>)">
-          <img src="../../image/delete.png" width="25px" height="25px">
-        </button>
-      </td>
+      <td><%=oldCounts.get(i)%></td>
     </tr>
     <%}%>
   </table>
           <%}%>
+  </div>
   </body>
 </html>

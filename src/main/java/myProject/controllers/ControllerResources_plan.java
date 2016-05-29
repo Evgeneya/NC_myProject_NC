@@ -121,6 +121,12 @@ public class ControllerResources_plan {
         long id = Long.parseLong(request.getParameter("id"));
         Resources_planService resources_planService = context.getBean("jpaResources_planService", Resources_planService.class);
         List<Resources_planEntity> listRes = resources_planService.findById(id);
+        String project = listRes.get(0).getProject().getName();
+        String position = listRes.get(0).getPosition().getName();
+        Integer hour = listRes.get(0).getHour();
+        request.setAttribute("project", project);
+        request.setAttribute("position", position);
+        request.setAttribute("hour", hour.toString());
         request.setAttribute("listRes", listRes);
         request.setAttribute("new", "false");
         return "new_updateResources_plan";

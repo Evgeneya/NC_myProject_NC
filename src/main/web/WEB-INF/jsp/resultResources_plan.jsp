@@ -72,10 +72,10 @@
   </ul>
 </div>
 <%if (request.getAttribute("del").equals("true")){%>
-  <h3 class="Message">Сотрудник успешно удален</h3>
+  <h3 class="Message">Ресурсный план успешно удален</h3>
 <%}
 else{%>
-  <h3 class="Message">Информация о сотруднике успешно изменена</h3>
+  <h3 class="Message">Информация о ресурсном плане успешно изменена</h3>
 <%}%>
 </body>
 </html>

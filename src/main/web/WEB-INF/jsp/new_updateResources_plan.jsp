@@ -1,7 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="myProject.entities.*" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: 1
@@ -73,42 +72,47 @@
     <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%String res = (String) request.getAttribute("res");%>
-<form action="/findResources_plan">
-  <h2>Поиск по ресурсным планам</h2>
-  <h3>Критерии поиска:</h3>
+<%if (request.getAttribute("new").equals("true")){
+String res = (String) request.getAttribute("res");%>
+<form action="/new_updateResources_plan">
+  <h2>Новый ресурсный план</h2>
+  <input name="new" value="true" type="hidden">
   <input name="res" value="true" type="hidden">
-  <p>Проект:
-    <select name="project">
-      <option></option>
-      <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
-        for (int i = 0; i < listPro.size(); i++) {
-          if ((request.getAttribute("project") != null) && request.getAttribute("project").equals(listPro.get(i).getName())){%>
-      <option selected><%=listPro.get(i).getName()%></option>
-      <%}else {%>
-      <option><%=listPro.get(i).getName()%></option>
-      <%}
-      }%>
-    </select>
-  </p>
-  <p>Должность:
-  <select name="position">
-    <option></option>
-    <%List<PositionEntity> listPos = (List<PositionEntity>) request.getAttribute("listPos");
-      for (int i = 0; i < listPos.size(); i++) {
-        if ((request.getAttribute("position") != null) && request.getAttribute("position").equals(listPos.get(i).getName())){%>
-          <option selected><%=listPos.get(i).getName()%></option>
-        <%}else {%>
-          <option><%=listPos.get(i).getName()%></option>
-        <%}
-      }%>
-  </select>
-  </p>
-  <button id="findPlanButton" type="submit"><b>Найти</b></button>
+  <div class="divNewPlanText">
+    <p>Проект:</p>
+    <p>Должность:</p>
+    <p>Кол-во часов</p>
+  </div>
+  <div class="divNewPlanData">
+    <p>
+      <select name="project">
+        <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
+          for (int i = 0; i < listPro.size(); i++) {%>
+        <option><%=listPro.get(i).getName()%></option>
+        <%}%>
+      </select>
+    </p>
+    <p>
+      <select name="position">
+        <%List<PositionEntity> listPos = (List<PositionEntity>) request.getAttribute("listPos");
+          for (int i = 0; i < listPos.size(); i++) {%>
+            <option><%=listPos.get(i).getName()%></option>
+        <%}%>
+      </select>
+    </p>
+    <p>
+      <select name="hour">
+        <%for (int i = 1; i <= 100; i++){%>
+            <option><%=i%></option>
+        <%}%>
+      </select>
+    </p>
+  </div>
+  <button class="newPlanButton" type="submit"><b>Добавить</b></button>
 </form>
 <%if (res.equals("true")){%>
-<table id="resultFindTable">
-  <caption>Результат поиска</caption>
+<table id="resultNewTable">
+  <caption>Новый ресурсный план успешно добавлен</caption>
   <tr>
     <th>id</th>
     <th>Название проекта</th>
@@ -139,6 +143,58 @@
   </tr>
   <%}%>
 </table>
+<%}%>
+<%}
+else {%>
+<%ArrayList<Resources_planEntity> listRes = (ArrayList<Resources_planEntity>) request.getAttribute("listRes");%>
+<form action="/resultResources_plan">
+  <h2>Изменить сведения в ресурсном плане</h2>
+  <input name="del" value="false" type="hidden">
+  <input name="id" value="<%=listRes.get(0).getId()%>" type="hidden">
+  <div class="divNewPlanText">
+    <p>Проект:</p>
+    <p>Должность:</p>
+    <p>Кол-во часов</p>
+  </div>
+  <div class="divNewPlanData">
+    <p>
+      <select name="project">
+        <%List<ProjectEntity> listPro = (List<ProjectEntity>) request.getAttribute("listPro");
+          for (int i = 0; i < listPro.size(); i++) {
+            if ((request.getAttribute("project") != null) && request.getAttribute("project").equals(listPro.get(i).getName())){%>
+              <option selected><%=listPro.get(i).getName()%></option>
+            <%}else {%>
+              <option><%=listPro.get(i).getName()%></option>
+            <%}
+          }%>
+      </select>
+    </p>
+    <p>
+      <select name="position">
+        <%List<PositionEntity> listPos = (List<PositionEntity>) request.getAttribute("listPos");
+          for (int i = 0; i < listPos.size(); i++) {
+            if ((request.getAttribute("position") != null) && request.getAttribute("position").equals(listPos.get(i).getName())){%>
+              <option selected><%=listPos.get(i).getName()%></option>
+            <%}else {%>
+              <option><%=listPos.get(i).getName()%></option>
+            <%}
+          }%>
+      </select>
+    </p>
+    <p>
+      <select name="hour">
+        <%for (int i = 1; i <= 100; i++){
+          if (request.getAttribute("hour")!=null && request.getAttribute("hour") != "" && Integer.parseInt((String) request.getAttribute("hour"))==i){%>
+        <option selected><%=i%></option>
+        <%} else{%>
+        <option><%=i%></option>
+        <%}
+        }%>
+      </select>
+    </p>
+  </div>
+  <button class="newPlanButton" type="submit"><b>Изменить</b></button>
+</form>
 <%}%>
 </body>
 </html>

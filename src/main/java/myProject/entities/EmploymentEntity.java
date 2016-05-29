@@ -14,6 +14,8 @@ public class EmploymentEntity {
 
     @Id
     @Column(name="id")
+    @GeneratedValue(generator="EmploymentSeq")
+    @SequenceGenerator(name="EmploymentSeq",sequenceName="EMPLOYMENT_ID_SEQ", allocationSize=1)
     private long id;
 
     @ManyToOne(optional = false)

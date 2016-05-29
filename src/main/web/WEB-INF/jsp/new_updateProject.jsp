@@ -30,7 +30,6 @@
     <li id="menu_6" onmouseover="showMenu('6')" onmouseout="hideMenu('6')">Ресурсные планы</li>
   </ul>
 </div>
-</div>
 <div id="submenu_1" style="display:none;" onmouseout="hideMenu('1')">
   <ul>
     <li><a href="/listEmployee">Список cотрудников</a></li>
@@ -41,36 +40,36 @@
 <div id="submenu_2" style="display:none;" onmouseout="hideMenu('2')">
   <ul>
     <li><a href="/listPosition">Список должностей</a></li>
-    <li><a href="/newPosition">Новая должность</a></li>
-    <li><a href="/findPosition">Поиск по должностям</a></li>
+    <li><a href="/new_updatePosition?new=true&res=false">Новая должность</a></li>
+    <li><a href="/findPosition?res=false">Поиск по должностям</a></li>
   </ul>
 </div>
 <div id="submenu_3" style="display:none;" onmouseout="hideMenu('3')">
   <ul>
     <li><a href="/listProject">Список проектов</a></li>
-    <li><a href="/newProject">Новый проект</a></li>
-    <li><a href="/findProject">Поиск по проектам</a></li>
+    <li><a href="/new_updateProject?new=true&res=false">Новый проект</a></li>
+    <li><a href="/findProject?res=false">Поиск по проектам</a></li>
   </ul>
 </div>
 <div id="submenu_4" style="display:none;" onmouseout="hideMenu('4')">
   <ul>
     <li><a href="/listEmployment">Полный список</a></li>
-    <li><a href="/newEmployment">Назначить сотрудника на проект</a></li>
-    <li><a href="/findEmployment">Поиск по занятости</a></li>
+    <li><a href="/new_updateEmployment?new=true&res=false">Назначить сотрудника на проект</a></li>
+    <li><a href="/findEmployment?res=false">Поиск по занятости</a></li>
   </ul>
 </div>
 <div id="submenu_5" style="display:none;" onmouseout="hideMenu('5')">
   <ul>
     <li><a href="/listCustomer">Список заказчиков</a></li>
-    <li><a href="/newCustomer">Новый заказчик</a></li>
-    <li><a href="/findCustomer">Поиск заказчиков</a></li>
+    <li><a href="/new_updateCustomer?new=true&res=false">Новый заказчик</a></li>
+    <li><a href="/findCustomer?res=false">Поиск заказчиков</a></li>
   </ul>
 </div>
 <div id="submenu_6" style="display:none;" onmouseout="hideMenu('6')">
   <ul>
     <li><a href="/listResources_plan">Список ресурсных планов</a></li>
-    <li><a href="/newResources_plan">Новый ресурсный план</a></li>
-    <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
+    <li><a href="/new_updateResources_plan?new=true&res=false">Новый ресурсный план</a></li>
+    <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
 <%if (request.getAttribute("new").equals("true")){
@@ -95,19 +94,16 @@ String res = (String) request.getAttribute("res");%>
     </select>
     </p>
     <p><select name="d1">
-        <option></option>
         <%for (int i = 1; i < 32; i++){%>
           <option><%=i%></option>
         <%}%>
       </select>
       <select name="m1">
-        <option></option>
         <%for (int i = 1; i < 13; i++){%>
           <option><%=i%></option>
         <%}%>
       </select>
       <select name="y1">
-        <option></option>
         <%for (int i = 2016; i < 2025; i++){%>
           <option><%=i%></option>
         <%}%>
@@ -115,19 +111,16 @@ String res = (String) request.getAttribute("res");%>
     </p>
     <p>
       <select name="d2">
-        <option></option>
         <%for (int i = 1; i < 32; i++){%>
           <option><%=i%></option>
         <%}%>
       </select>
       <select name="m2">
-        <option></option>
         <%for (int i = 1; i < 13; i++){%>
           <option><%=i%></option>
         <%}%>
       </select>
       <select name="y2">
-        <option></option>
         <%for (int i = 2016; i < 2025; i++){%>
           <option><%=i%></option>
         <%}%>
@@ -183,7 +176,7 @@ String res = (String) request.getAttribute("res");%>
 <%}
 else {%>
 <%ArrayList<ProjectEntity> listPro = (ArrayList<ProjectEntity>) request.getAttribute("listPro");%>
-<form action="/resultProject">
+<form action="/resultProject?auto=false&del=false">
   <input name="del" value="false" type="hidden">
   <input name="id" value="<%=listPro.get(0).getId()%>" type="hidden">
   <h2>Изменить сведения о проекте</h2>
@@ -207,7 +200,6 @@ else {%>
       </select>
     </p>
     <p><select name="d1">
-        <option></option>
         <%for (int i = 1; i < 32; i++){
           if (request.getAttribute("d1") != "" && Integer.parseInt((String) request.getAttribute("d1"))==i){%>
         <option selected><%=i%></option>
@@ -218,7 +210,6 @@ else {%>
         }%>
       </select>
       <select name="m1">
-        <option></option>
         <%for (int i = 1; i < 13; i++){
           if (request.getAttribute("m1") != "" && Integer.parseInt((String) request.getAttribute("m1"))==i){%>
         <option selected><%=i%></option>
@@ -229,7 +220,6 @@ else {%>
         }%>
       </select>
       <select name="y1">
-        <option></option>
         <%for (int i = 2016; i < 2025; i++){
           if (request.getAttribute("y1") != "" && Integer.parseInt((String) request.getAttribute("y1"))==i){%>
         <option selected><%=i%></option>
@@ -241,7 +231,6 @@ else {%>
       </select>
     </p>
     <p><select name="d2">
-        <option></option>
         <%for (int i = 1; i < 32; i++){
           if (request.getAttribute("d2") != "" && Integer.parseInt((String) request.getAttribute("d2"))==i){%>
         <option selected><%=i%></option>
@@ -252,7 +241,6 @@ else {%>
         }%>
       </select>
       <select name="m2">
-        <option></option>
         <%for (int i = 1; i < 13; i++){
           if (request.getAttribute("m2") != "" && Integer.parseInt((String) request.getAttribute("m2"))==i){%>
         <option selected><%=i%></option>
@@ -263,7 +251,6 @@ else {%>
         }%>
       </select>
       <select name="y2">
-        <option></option>
         <%for (int i = 2016; i < 2025; i++){
           if (request.getAttribute("y2") != "" && Integer.parseInt((String) request.getAttribute("y2"))==i){%>
         <option selected><%=i%></option>

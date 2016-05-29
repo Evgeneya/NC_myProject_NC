@@ -127,6 +127,12 @@ public class ControllerEmployment {
         long id = Long.parseLong(request.getParameter("id"));
         EmploymentService employmentService = context.getBean("jpaEmploymentService", EmploymentService.class);
         List<EmploymentEntity> listEmpl = employmentService.findById(id);
+        String employee = listEmpl.get(0).getEmployee().getName();
+        String project = listEmpl.get(0).getProject().getName();
+        Integer hour = listEmpl.get(0).getCount_hour();
+        request.setAttribute("employee", employee);
+        request.setAttribute("project", project);
+        request.setAttribute("hour", hour.toString());
         request.setAttribute("listEmpl", listEmpl);
         request.setAttribute("new", "false");
         return "new_updateEmployment";

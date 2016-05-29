@@ -50,8 +50,8 @@
   <div id="submenu_4" style="display:none;" onmouseout="hideMenu('4')">
     <ul>
       <li><a href="/listEmployment">Полный список</a></li>
-      <li><a href="/newEmployment">Назначить сотрудника на проект</a></li>
-      <li><a href="/findEmployment">Поиск по занятости</a></li>
+      <li><a href="/new_updateEmployment?new=true&res=false">Назначить сотрудника на проект</a></li>
+      <li><a href="/findEmployment?res=false">Поиск по занятости</a></li>
     </ul>
   </div>
   <div id="submenu_5" style="display:none;" onmouseout="hideMenu('5')">
@@ -64,8 +64,8 @@
   <div id="submenu_6" style="display:none;" onmouseout="hideMenu('6')">
     <ul>
       <li><a href="/listResources_plan">Список ресурсных планов</a></li>
-      <li><a href="/newResources_plan">Новый ресурсный план</a></li>
-      <li><a href="/findResources_plan">Поиск по ресурсным планам</a></li>
+      <li><a href="/new_updateResources_plan?new=true&res=false">Новый ресурсный план</a></li>
+      <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
     </ul>
   </div>
   </body>

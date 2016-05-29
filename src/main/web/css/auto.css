@@ -1,0 +1,39 @@
+h2{
+    left: 300px;
+    position: absolute;
+    top: 80px;
+    color: white;
+}
+
+table{
+    width: 800px;
+    position: static;
+}
+
+#resDiv{
+    position: absolute;
+    left: 250px;
+    top: 150px;
+}
+#resultNewEmpTable{
+
+}
+
+#resultOldEmpTable{
+    position: relative;
+    top: 50px;
+    left: 0px;
+}
+
+#goButton{
+    position: relative;
+    left: 350px;
+    top: 20px;
+}
+
+.resP{
+    position: absolute;
+    left: 250px;
+    top: 130px;
+    color: #B72222;
+}

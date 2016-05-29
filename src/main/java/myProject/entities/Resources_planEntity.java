@@ -12,6 +12,8 @@ public class Resources_planEntity {
 
     @Id
     @Column(name="id")
+    @GeneratedValue(generator="PlanSeq")
+    @SequenceGenerator(name="PlanSeq",sequenceName="PLAN_ID_SEQ", allocationSize=1)
     private long id;
 
     @ManyToOne(optional = false)

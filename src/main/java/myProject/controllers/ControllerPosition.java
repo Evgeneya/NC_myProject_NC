@@ -2,8 +2,10 @@ package myProject.controllers;
 
 import myProject.entities.EmployeeEntity;
 import myProject.entities.PositionEntity;
+import myProject.entities.Resources_planEntity;
 import myProject.services.EmployeeService;
 import myProject.services.PositionService;
+import myProject.services.Resources_planService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -108,6 +110,11 @@ public class ControllerPosition {
         Collection<EmployeeEntity> employees = listPos.get(0).getEmployees();
         for (Iterator i = employees.iterator(); i.hasNext();){
             empService.delete(((EmployeeEntity) i.next()).getId());
+        }
+        Resources_planService resources_planService = context.getBean("jpaResources_planService", Resources_planService.class);
+        Collection<Resources_planEntity> resources_planEntities = listPos.get(0).getPlans();
+        for (Iterator<Resources_planEntity> i = resources_planEntities.iterator(); i.hasNext();) {
+            resources_planService.delete((i.next()).getId());
         }
         posService.delete(id);
         request.setAttribute("del", "true");

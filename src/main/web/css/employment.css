@@ -1,0 +1,30 @@
+table{
+    width: 800px;
+}
+
+#findEmplButton{
+    position: absolute;
+    left: 120px;
+}
+
+#resultFindTable{
+    top: 350px;
+}
+
+.divNewEmplText{
+    font-size: 16.5px;
+}
+.divNewEmplData{
+    position: absolute;
+    top: 50px;
+    left: 150px;
+}
+
+.newEmplButton{
+    position: absolute;
+    left: 70px;
+}
+
+#resultNewTable{
+    top: 380px;
+}

@@ -59,7 +59,7 @@ function deleteCust(id){
 function deletePro (id) {
     var x=confirm("Вы действительно хотите удалить проект?");
     if (x==true){
-        document.location.href = "/resultProject?del=true&id=" + id;
+        document.location.href = "/resultProject?auto=false&del=true&id=" + id;
     }
     else return;
 }
