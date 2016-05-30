@@ -32,10 +32,10 @@ public class ProjectEntity {
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private Collection<EmploymentEntity> employments;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private Collection<Resources_planEntity> plans;
 
     public ProjectEntity(){

@@ -9,6 +9,7 @@ import myProject.services.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,10 +28,10 @@ public class ControllerEmployee {
     ApplicationContext context;
 
     @RequestMapping(value = "/listEmployee", method = RequestMethod.GET)
-    public String listEmployee(ServletRequest request) {
+    public String listEmployee(ModelMap model) {
         EmployeeService emp = context.getBean("jpaEmployeeService", EmployeeService.class);
         List<EmployeeEntity> listEmp = emp.findAll();
-        request.setAttribute("listEmp", listEmp);
+        model.addAttribute("listEmp", listEmp);
         return "listEmployee";
     }
 

@@ -9,6 +9,7 @@
   Time: 17:15
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" type="text/css" href="../../css/base.css">
 <link rel="stylesheet" type="text/css" href="../../css/employee.css">
@@ -74,7 +75,6 @@
     <li><a href="/findResources_plan?res=false">Поиск по ресурсным планам</a></li>
   </ul>
 </div>
-<%String res = (String) request.getAttribute("res");%>
   <form action="/findEmployee">
     <h2>Поиск сотрудников</h2>
     <h3>Критерии поиска:</h3>
@@ -95,7 +95,7 @@
     <p>Заработная плата:   от <input type="text" size="7px" name="sal1" value="<%=(request.getAttribute("sal1")==null)?"":request.getAttribute("sal1")%>">  до <input type="text" size="7px" name="sal2" value="<%=(request.getAttribute("sal2")==null)?"":request.getAttribute("sal2")%>"></p>
     <button id="findEmpButton" type="submit"><b>Найти</b></button>
   </form>
-<%if (res.equals("true")){%>
+<c:if test="${res}">
 <table id="resultFindTable">
   <caption>Результаты поиска:</caption>
   <tr>
@@ -111,33 +111,32 @@
     <th class="notResizeCol">Изменение</th>
     <th class="notResizeCol">Удаление</th>
   </tr>
-  <% ArrayList<EmployeeEntity> listEmp = (ArrayList<EmployeeEntity>) request.getAttribute("listEmp");
-    for (int i=0; i < listEmp.size(); i++){%>
+  <c:forEach items="${listEmp}" var="emp">
   <tr>
-    <td><%=listEmp.get(i).getId()%></td>
-    <td><%=listEmp.get(i).getName()%></td>
-    <td><%=listEmp.get(i).getPosition().getName()%></td>
-    <td><%=listEmp.get(i).getEmail()%></td>
-    <td><%=listEmp.get(i).getPhone()%></td>
-    <td><%=listEmp.get(i).getAge()%></td>
-    <td><%=listEmp.get(i).getStatus()%></td>
-    <td><%=listEmp.get(i).getExperience()%></td>
-    <td><%=listEmp.get(i).getSalary()%></td>
+    <td>${emp.id}</td>
+    <td>${emp.name}</td>
+    <td>${emp.position.name}</td>
+    <td>${emp.email}</td>
+    <td>${emp.phone}</td>
+    <td>${emp.age}</td>
+    <td>${emp.status}</td>
+    <td>${emp.experience}</td>
+    <td>${emp.salary}</td>
     <td>
-      <a href="/new_updateEmployee?new=false&id=<%=listEmp.get(i).getId()%>">
-        <button id="updateButton<%=listEmp.get(i).getId()%>" class="updateButton" onmouseover="selectButton('updateButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('updateButton<%=listEmp.get(i).getId()%>')" >
+      <a href="/new_updateEmployee?new=false&id=${emp.id}">
+        <button id="updateButton${emp.id}" class="updateButton" onmouseover="selectButton('updateButton${emp.id}')" onmouseout="unselectButton('updateButton${emp.id}')" >
           <img src="../../image/update.png" width="25px" height="25px">
         </button>
       </a>
     </td>
     <td>
-      <button id="deleteButton<%=listEmp.get(i).getId()%>" class="deleteButton" onmouseover="selectButton('deleteButton<%=listEmp.get(i).getId()%>')" onmouseout="unselectButton('deleteButton<%=listEmp.get(i).getId()%>')" onclick="deleteEmp(<%=listEmp.get(i).getId()%>)">
+      <button id="deleteButton${emp.id}" class="deleteButton" onmouseover="selectButton('deleteButton${emp.id}')" onmouseout="unselectButton('deleteButton${emp.id}')" onclick="deleteEmp(${emp.id})">
         <img src="../../image/delete.png" width="25px" height="25px">
       </button>
     </td>
   </tr>
-  <%}%>
+  </c:forEach>
 </table>
-<%}%>
+</c:if>
 </body>
 </html>

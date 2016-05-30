@@ -21,7 +21,7 @@ public class CustomerEntity {
     @Column(name="phone")
     private String phone;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private Collection<ProjectEntity> projects;
 
 

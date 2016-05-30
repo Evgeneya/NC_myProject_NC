@@ -56,6 +56,7 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.3.0.RC1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.3.0.RC1" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.3.0.RC1" />
+          <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
         </element>
       </element>
       <element id="directory" name="META-INF">
