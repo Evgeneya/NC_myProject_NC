@@ -249,6 +249,10 @@ public class ControllerProject {
                     int needTime = man_hour - sum_hour;   //время, которое нужно дозаполнить
                     request.setAttribute("full", "false");
                     List<EmployeeEntity> listE = employeeService.findByPosition(plan.getPosition().getId()); //все сотрудники с заданной должностью
+                    if (listE.size() == 0){ //нет сотрудников с такой должностью!
+                        request.setAttribute("emp", false);
+                        return "autoProject";
+                    }
                     Map<EmployeeEntity, Integer> map = new LinkedHashMap<>();
                     int time = 40;
                     for (int k = 0; k < listE.size(); k++){
