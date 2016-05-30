@@ -250,7 +250,7 @@ public class ControllerProject {
                     request.setAttribute("full", "false");
                     List<EmployeeEntity> listE = employeeService.findByPosition(plan.getPosition().getId()); //все сотрудники с заданной должностью
                     if (listE.size() == 0){ //нет сотрудников с такой должностью!
-                        request.setAttribute("emp", false);
+                        request.setAttribute("emp", "false");
                         return "autoProject";
                     }
                     Map<EmployeeEntity, Integer> map = new LinkedHashMap<>();
@@ -294,7 +294,7 @@ public class ControllerProject {
                                 needTime -= value;
                             }
                             else {   //не хватает сотрудников для реализации плана!
-                                request.setAttribute("emp", false);
+                                request.setAttribute("emp", "false");
                                 return "autoProject";
                             }
                         }else {
