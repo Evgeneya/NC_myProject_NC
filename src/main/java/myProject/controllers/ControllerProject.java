@@ -262,7 +262,9 @@ public class ControllerProject {
                             EmploymentEntity employmentEntity = j.next();
                             sum_time += employmentEntity.getCount_hour();
                         }
-                        map.put(listE.get(k), time - sum_time);
+                        if (sum_time < 40) {
+                            map.put(listE.get(k), time - sum_time);
+                        }
                     }
                     List listMap = new ArrayList(map.entrySet());
                     Collections.sort(listMap, new Comparator<Map.Entry>() {
